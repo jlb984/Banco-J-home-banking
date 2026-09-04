@@ -4,7 +4,8 @@
 **Epic:** BJHB-3
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -47,6 +48,37 @@ Como profesional, quiero configurar mi disponibilidad semanal, para ofrecer úni
 **Then** el sistema rechaza la configuración
 **And** conserva las reglas anteriores
 
+### Escenario 4: Aceptar bloques contiguos
+**Given** que un bloque comienza exactamente cuando termina otro del mismo día
+**When** el profesional guarda la disponibilidad
+**Then** el sistema acepta ambos bloques
+**And** no los considera solapados
+
+### Escenario 5: Rechazar un bloque que cruza medianoche
+**Given** que un bloque comienza un día y termina al día siguiente
+**When** el profesional intenta guardarlo
+**Then** el sistema rechaza el bloque
+**And** muestra «Divide el horario en dos bloques, uno para cada día.»
+
+### Escenario 6: Conservar la configuración ante un fallo
+**Given** que existe una disponibilidad guardada
+**When** falla el reemplazo de la configuración semanal
+**Then** el sistema conserva íntegramente la configuración anterior
+**And** muestra «No pudimos guardar tu disponibilidad. Intenta nuevamente.»
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-15 y decisiones transversales aplicables.
+
+* Los bloques se interpretan en la zona horaria del profesional.
+* Se permiten bloques contiguos; no se consideran solapados.
+* Un bloque no puede cruzar medianoche. Debe dividirse en dos días.
+* Mensajes aprobados:
+  * Fin no posterior al inicio: `La hora de fin debe ser posterior a la hora de inicio.`
+  * Solapamiento: `Este horario se superpone con otro bloque del mismo día.`
+  * Cruce de medianoche: `Divide el horario en dos bloques, uno para cada día.`
+* El guardado es atómico: reemplaza toda la configuración o conserva íntegramente la anterior y muestra `No pudimos guardar tu disponibilidad. Intenta nuevamente.`
+
 ## Notas de QA
 
 * Probar días sin atención, varios bloques válidos y límites contiguos.
@@ -55,7 +87,7 @@ Como profesional, quiero configurar mi disponibilidad semanal, para ofrecer úni
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-15.md`
 
@@ -66,13 +98,12 @@ Como profesional, quiero configurar mi disponibilidad semanal, para ofrecer úni
 | Configuración por día y validaciones de los bloques | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 4.1 |
 | Reemplazo completo al guardar | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 4.1; `.context/Confluence-corporativo/documentacion para QA/nota-ambientes-y-accesos.md` · Horarios |
 | Uso de las reglas para calcular slots | `.context/Confluence-corporativo/04-notas-tecnicas.md` · Los slots |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-15 |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué zona horaria se usa para guardar y presentar los bloques?
-* ¿Se permiten bloques contiguos y bloques que crucen la medianoche?
-* ¿Qué mensaje debe mostrarse para cada validación fallida?
+* Ninguna pendiente de decisión funcional.

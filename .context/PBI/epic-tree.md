@@ -7,7 +7,7 @@
 **GitHub canónico:** `https://github.com/jlb984/Banco-J-Home-Banking`
 **Migración:** completada y documentada en `.context/PBI/migracion-caq-a-bjhb.md`
 **Tipo de proyecto:** Brownfield
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 
 | Epic | Stories | Refinadas | Inspeccionadas | Sin verificar | Estado de sincronización |
 | :--- | :---: | :---: | :---: | :---: | :--- |
@@ -23,23 +23,53 @@
 
 ## Pendiente de subir a Jira
 
-* Ninguna: las cinco Epics y sus 22 Stories están sincronizadas con `BJHB`.
+* Ninguna. Las 22 Stories fueron resincronizadas con `BJHB` el 04/09/2026.
 
-## Estado del refinamiento
+## Estado de refinamiento
 
-* Las 22 Stories están refinadas con análisis INVEST, criterios de aceptación en Gherkin, notas de QA, fuentes, contradicciones y preguntas abiertas.
-* El 03/09/2026 se comparó el material heredado con el backlog existente de `BJHB`: se
-  reutilizaron dos Epics y una Story equivalentes, y se crearon únicamente los elementos
-  faltantes. Las 22 Stories quedaron con sus claves reales y descripciones refinadas.
+**Última corrida:** 04/09/2026 · alcance: todas
+
+| Resultado | Cantidad |
+| :--- | ---: |
+| Stories reprocesadas | 22 |
+| Stories refinadas | 22 |
+| Escenarios Gherkin vigentes | 157 |
+| Escenarios netos agregados en esta corrida | 71 |
+| Stories con preguntas funcionales abiertas | 0 |
+
+Las decisiones vigentes de `.context/PBI/decisiones-po-proximo-release.md` se incorporaron
+como reglas explícitas y escenarios verificables. Las preguntas que permanecen en cuatro
+Stories son de diagnóstico técnico sobre discrepancias ya observadas, no decisiones
+funcionales pendientes.
+
+**Discrepancias contra Jira antes de la sincronización:** ninguna modificación funcional
+más reciente que el material local. Se conservaron las claves reales de `BJHB`.
 
 ## Estado de Shift-Left Testing
 
-* Las 22 Stories fueron inspeccionadas contra el PRD, sus fuentes y, cuando correspondía, el comportamiento observado.
-* Se registraron 69 defectos de requisitos: 8 Stories quedaron con valoración `Bloqueante` y 14 con `Requiere Cambios`.
-* Se generaron cinco planes de prueba basados en riesgos, uno por Epic. La ejecución mutante queda bloqueada porque el único entorno confirmado es Producción y no existen seed ni reset seguros.
-* Las 22 descripciones corregidas fueron sincronizadas con `BJHB` el 03/09/2026. Cada Story
-  recibió además su reporte de inspección Shift-Left y su decisión específica del PO como
-  comentarios de Jira; los reportes locales conservan la trazabilidad de los 69 hallazgos.
+**Última corrida:** 04/09/2026 · alcance: todas
+
+| Resultado | Cantidad |
+| :--- | ---: |
+| Stories inspeccionadas | 22 |
+| Aprobadas | 18 |
+| Requiere cambios | 0 |
+| Bloqueantes | 4 |
+| Hallazgos abiertos | 4 |
+
+Las decisiones de Producto resolvieron las 69 observaciones de requisitos de la corrida
+anterior. Permanecen cuatro discrepancias contra comportamiento observado: protección después
+del logout (`BJHB-11`), exposición de la URL pública (`BJHB-13`), cancelación no persistida
+(`BJHB-24`) y alta manual de cliente sin respuesta visible (`BJHB-9`).
+
+Los cinco planes de prueba por Epic fueron regenerados con la escala de riesgo vigente, los
+objetivos no funcionales aprobados y la necesidad documentada de un entorno QA aislado. La
+ejecución mutante continúa bloqueada mientras el mapa real solo confirme Producción y no existan
+seed, teardown ni correo sandbox disponibles.
+
+**Sincronización Jira:** completada y verificada el 04/09/2026. Las 22 descripciones fueron
+actualizadas y cada Story conserva exactamente un comentario Shift-Left y uno de decisión de
+Producto, ambos actualizados sin duplicados.
 
 ## Pendiente de verificar contra la aplicación
 

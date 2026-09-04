@@ -4,7 +4,8 @@
 **Epic:** BJHB-6
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -50,6 +51,33 @@ Como responsable del producto, quiero limitar el plan gratuito a diez clientes �
 **When** intenta cargar manualmente un correo nuevo
 **Then** el sistema rechaza el alta
 
+### Escenario 5: Contar un cliente creado manualmente
+**Given** que un correo normalizado todavía no pertenece a los clientes del profesional
+**When** se crea manualmente ese cliente
+**Then** el sistema incrementa en uno el conteo de clientes únicos
+
+### Escenario 6: Contar un cliente por su primer turno
+**Given** que un correo normalizado todavía no pertenece a los clientes del profesional
+**When** ese cliente confirma su primer turno
+**Then** el sistema incrementa en uno el conteo de clientes únicos
+
+### Escenario 7: Conservar el conteo al cancelar
+**Given** que un cliente ya fue contado y su turno queda cancelado
+**When** el sistema recalcula el límite del plan gratuito
+**Then** el cliente continúa contando
+**And** sus reservas futuras siguen permitidas
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-8 y decisiones transversales aplicables.
+
+* El conteo usa el correo normalizado por profesional.
+* Un cliente comienza a contar cuando se crea manualmente o cuando obtiene su primer turno `confirmed`.
+* Cancelar turnos no reduce el conteo. El release 1.1 no incluye eliminación de clientes; una futura baja deberá definir su efecto antes de implementarse.
+* Los clientes existentes pueden reservar turnos ilimitados.
+* Mensaje público para el cliente número once: `Este profesional alcanzó el límite de nuevos clientes. Contacta directamente al profesional para coordinar tu turno.`
+* El bloqueo se aplica de forma consistente a reserva pública y alta manual.
+
 ## Notas de QA
 
 * Probar correos con diferencias de mayúsculas y espacios sin asumir normalización.
@@ -58,7 +86,7 @@ Como responsable del producto, quiero limitar el plan gratuito a diez clientes �
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-8.md`
 
@@ -69,13 +97,12 @@ Como responsable del producto, quiero limitar el plan gratuito a diez clientes �
 | Límite, unicidad por correo y continuidad de clientes existentes | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 8.1 |
 | Bloqueo de reserva y alta manual | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 8.2 |
 | Mensaje al cliente nuevo bloqueado | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 8.2 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-8 |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Cómo se normaliza el correo para determinar clientes únicos?
-* ¿Los clientes cancelados o eliminados continúan contando para el límite?
-* ¿Cuál es el texto literal del mensaje de bloqueo?
+* Ninguna pendiente de decisión funcional.

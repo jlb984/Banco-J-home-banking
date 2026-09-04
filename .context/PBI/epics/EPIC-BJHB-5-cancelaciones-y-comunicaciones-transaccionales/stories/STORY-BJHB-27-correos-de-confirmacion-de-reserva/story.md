@@ -4,7 +4,8 @@
 **Epic:** BJHB-5
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,7 +18,7 @@ Como participante de una reserva, quiero recibir su confirmación por correo, pa
 | Independiente | No | Depende de una reserva confirmada. |
 | Negociable | Sí | Destinatarios y enlace están definidos; detalle y fallos siguen abiertos. |
 | Valiosa | Sí | Deja constancia del turno para ambas partes. |
-| Estimable | No | Faltan contenido obligatorio y manejo de fallas parciales. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Cubre los correos disparados por una reserva. |
 | Testeable | Sí | Envíos, destinatarios y enlace pueden verificarse con buzones controlados. |
 
@@ -43,6 +44,38 @@ Como participante de una reserva, quiero recibir su confirmación por correo, pa
 **Then** el sistema conserva el turno `confirmed`
 **And** no informa que la reserva completa falló
 
+### Escenario 4: Incluir el contenido para cada destinatario
+**Given** que una reserva pública quedó confirmada
+**When** el sistema genera los correos
+**Then** el cliente recibe profesional, fecha, hora, zona, estado y enlace de cancelación
+**And** el profesional recibe cliente, correo, fecha, hora, zona y origen «Reserva pública»
+
+### Escenario 5: Reintentar sin revertir la reserva
+**Given** que el turno ya está confirmado y falla una entrega
+**When** se procesa la política de correo
+**Then** el sistema conserva la reserva
+**And** reintenta después de 1 minuto, 10 minutos y 1 hora
+**And** deduplica cada envío por su evento funcional
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-27 y decisiones transversales aplicables.
+
+**Política común de correos de producto**
+
+* Resend es el proveedor para bienvenida, reserva, cancelación y recordatorio. Supabase se conserva para autenticación y recuperación.
+* Cada evento funcional tiene un identificador idempotente para evitar correos duplicados.
+* Ante fallo se realizan tres reintentos: después de 1 minuto, 10 minutos y 1 hora.
+* Agotados los reintentos, el evento queda `failed`, se registra en monitoreo y se alerta al equipo. No se revierte una cuenta, reserva o cancelación ya persistida.
+* La interfaz informa éxito de la operación principal y, cuando el usuario autenticado sea el actor, advierte `La operación se completó, pero no pudimos enviar el correo.`
+
+**Decisión específica de BJHB-27**
+
+* El cliente recibe nombre del profesional, fecha, hora, zona, estado y enlace de cancelación.
+* El profesional recibe nombre y correo del cliente, fecha, hora, zona y origen `Reserva pública`.
+* El turno se confirma antes de generar los correos. Una falla de entrega no revierte la reserva.
+* Ambos envíos aplican la política común de reintentos y deduplicación.
+
 ## Notas de QA
 
 * Validar ambos buzones, datos del turno, enlace único y ausencia de credenciales.
@@ -51,7 +84,7 @@ Como participante de una reserva, quiero recibir su confirmación por correo, pa
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-27.md`
 
@@ -61,14 +94,13 @@ Como participante de una reserva, quiero recibir su confirmación por correo, pa
 | :--- | :--- |
 | Destinatarios, detalle y enlace de cancelación | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 7 |
 | Proveedor vigente Resend | `.context/Confluence-corporativo/05-hilo-mail-cambio-de-alcance.md` · resumen del 03/03/2026 |
-| Independencia entre creación y entrega | **Hipótesis** — las notas técnicas documentan envío sincrónico, pero no existe una regla acordada para fallas parciales |
+| Independencia entre creación y entrega | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-27 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-27 |
 
 ## Contradicciones detectadas
 
-* Las notas técnicas antiguas atribuyen todos los correos a Supabase; el hilo del 03/03/2026 migra los correos de producto a Resend. Se toma la fuente posterior.
+* Las notas antiguas atribuían los correos a Supabase; la decisión posterior y Producto establecen Resend para correos de producto y Supabase para autenticación.
 
 ## Preguntas abiertas
 
-* ¿Qué detalle mínimo contiene cada correo y en qué zona horaria se expresa?
-* ¿Qué política de reintentos y observabilidad se aplica a los fallos de Resend?
-* ¿Negocio confirma que una falla de correo no revierte una reserva creada?
+* Ninguna pendiente de decisión funcional.

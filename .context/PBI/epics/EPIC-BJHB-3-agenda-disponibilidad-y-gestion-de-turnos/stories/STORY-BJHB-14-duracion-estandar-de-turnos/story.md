@@ -4,7 +4,8 @@
 **Epic:** BJHB-3
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,9 +18,9 @@ Como profesional, quiero definir la duración estándar de mis turnos, para gene
 | Independiente | Sí | Puede validarse sobre una disponibilidad ya configurada. |
 | Negociable | Sí | El objetivo está definido; el conjunto de valores sigue abierto. |
 | Valiosa | Sí | Permite adecuar los horarios ofrecidos al servicio. |
-| Estimable | No | Falta decidir si se admite cualquier entero positivo o solo opciones cerradas. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Modifica una única regla global del profesional. |
-| Testeable | No | El cálculo es comprobable, pero el dominio de entrada no está acordado. |
+| Testeable | Sí | Los criterios incorporan resultados observables y valores aprobados para el release 1.1. |
 
 ## Criterios de Aceptación (Gherkin)
 
@@ -44,6 +45,27 @@ Como profesional, quiero definir la duración estándar de mis turnos, para gene
 **When** el sistema calcula sus horarios
 **Then** ofrece únicamente turnos completos dentro del bloque
 
+### Escenario 4: Rechazar una duración fuera del catálogo
+**Given** que el profesional intenta configurar una duración distinta de 15, 30, 45, 60, 90 o 120 minutos
+**When** guarda la configuración
+**Then** el sistema rechaza el valor
+**And** conserva la duración anterior
+
+### Escenario 5: Preservar los turnos existentes al cambiar la duración
+**Given** que el profesional tiene turnos ya creados
+**When** cambia la duración estándar
+**Then** el sistema aplica el nuevo valor solo a los slots futuros
+**And** no modifica la duración ni la hora de los turnos existentes
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-14 y decisiones transversales aplicables.
+
+* Los únicos valores válidos son 15, 30, 45, 60, 90 y 120 minutos. El valor inicial es 60 minutos.
+* Un cambio afecta únicamente la generación de slots futuros. Nunca modifica la duración ni la hora de turnos ya creados.
+* Si un bloque deja un remanente menor que la duración, el remanente se descarta y no genera un slot incompleto.
+* La interfaz observada se adopta como regla del próximo release y reemplaza la regla histórica de cualquier entero positivo.
+
 ## Notas de QA
 
 * Probar cada opción observada y bloques con división exacta e inexacta.
@@ -52,7 +74,7 @@ Como profesional, quiero definir la duración estándar de mis turnos, para gene
 
 ## Inspección Shift-Left
 
-**Resultado:** Bloqueante
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-14.md`
 
@@ -62,15 +84,14 @@ Como profesional, quiero definir la duración estándar de mis turnos, para gene
 | :--- | :--- |
 | Duración positiva, única y usada para dividir la franja | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 4.2 |
 | Opciones observadas de 15 a 120 minutos | `.context/architecture/prd.md` · Feature 2 |
-| Conjunto definitivo de duraciones permitidas | **Hipótesis** — la especificación admite cualquier entero y la UI observada presenta opciones cerradas |
-| Un remanente menor que la duración no genera un horario | **Hipótesis** — no hay documento que defina el redondeo |
+| Conjunto definitivo de duraciones permitidas | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-14 |
+| Un remanente menor que la duración no genera un horario | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-14 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-14 |
 
 ## Contradicciones detectadas
 
-* La especificación admite cualquier entero positivo; la interfaz observada ofrece 15, 30, 45, 60, 90 y 120 minutos. No se adopta una de las dos reglas sin decisión de Producto.
+* La especificación histórica admitía cualquier entero positivo y la interfaz observada ofrecía un catálogo cerrado. Producto adopta 15, 30, 45, 60, 90 y 120 minutos para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿La duración válida es cualquier entero positivo o solo 15, 30, 45, 60, 90 y 120 minutos?
-* ¿Qué ocurre con turnos futuros cuando cambia la duración?
-* ¿Cómo se trata el remanente de un bloque que no alcanza para otro turno completo?
+* Ninguna pendiente de decisión funcional.

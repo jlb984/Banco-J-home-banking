@@ -1,39 +1,37 @@
-# Reporte de Inspección de Requisitos: Acceso a la URL pública
+# Reporte de Inspección de Requisitos: Acceso a la URL pública del profesional
 
 **Historia:** BJHB-13
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-13-D1 | Contradice al sistema | La historia exige localizar la URL, pero no se observó en el panel. | Definir ubicación y verificar la brecha en un entorno seguro. |
-| BJHB-13-D2 | Completitud | No se define copia, confirmación ni comportamiento al cambiar nombre o slug. | Acordar interacción y ciclo de vida del enlace. |
-| BJHB-13-D3 | Contradicción documental | La especificación usa `cita.ai` y el entorno vigente usa `cita-ai.vercel.app`. | Mantener el dominio vigente y definir migración/redirect. |
+| BJHB-13-D1 | Contradice al sistema | La tarjeta `Mi enlace de reservas` requerida no fue localizada en la experiencia autenticada observada. | Implementar o verificar la tarjeta permanente, con `Copiar enlace` y `Abrir página`, antes de aprobar. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional autenticado, quiero localizar y copiar la URL pública vigente de mi cuenta, para compartirla. La URL se compone con `https://cita-ai.vercel.app/` y el slug único; ubicación, confirmación de copia, personalización y migración quedan `Pendiente`.
+La versión vigente de `story.md` contiene 9 escenarios verificables e incorpora las decisiones aprobadas de Producto. El requisito quedó definido; no se convierte el comportamiento observado en criterio. La discrepancia de implementación permanece bloqueante hasta contar con nueva evidencia.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Bloqueante
+* **Veredicto:** Bloqueante
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Criterios y contradicciones | `.context/PBI/epics/EPIC-BJHB-1-cuenta-y-activacion-del-profesional/stories/STORY-BJHB-13-acceso-a-url-publica/story.md` |
-| URL requerida y no localizada | `.context/architecture/prd.md` · Feature 1 y User Journeys |
-| Ausencia en navegación | **Observado** — producción, 30/08/2026. Evidencia: `.context/architecture/prd.md` · Feature 1 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-1-cuenta-y-activacion-del-profesional\stories\STORY-BJHB-13-acceso-a-url-publica\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 1 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-13 y decisiones transversales aplicables |
+| Comportamiento contrastado | **Observado** — producción, 30/08/2026. Evidencia: `.context/architecture/prd.md` · Feature 1, User Journeys y Fuentes. |
 
 ## Contradicciones detectadas
 
-* El dominio histórico y el vigente difieren; además, el producto no expuso la URL donde la historia la requiere.
+* La especificación histórica usa cita.ai/{slug} y la evidencia vigente utiliza https://cita-ai.vercel.app/; Producto adopta este último dominio para el release 1.1. La falta observada de la tarjeta en el dashboard continúa como brecha de implementación.
 
 ## Preguntas abiertas
 
-* ¿Dónde y cómo se comparte la URL?
-* ¿Cómo se migran o redirigen slugs y dominios anteriores?
+* ¿La ausencia observada de la tarjeta «Mi enlace de reservas» continúa vigente en el build que se entregará a QA?

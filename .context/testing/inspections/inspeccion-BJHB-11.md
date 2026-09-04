@@ -1,39 +1,37 @@
-# Reporte de Inspección de Requisitos: Inicio y cierre de sesión
+# Reporte de Inspección de Requisitos: Inicio y cierre de sesión del profesional
 
 **Historia:** BJHB-11
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-11-D1 | Contradice al sistema | Tras logout se renderizaron rutas documentadas como protegidas. | Confirmar si fue caché o autorización y exigir que no se expongan datos. |
-| BJHB-11-D2 | Completitud | No se define redirección, limpieza de UI ni alcance entre pestañas/dispositivos. | Acordar el estado posterior al logout. |
-| BJHB-11-D3 | Seguridad | No existe política acordada para intentos fallidos o bloqueo temporal. | Definir rate limit y recuperación sin facilitar enumeración. |
+| BJHB-11-D1 | Contradice al sistema | Las rutas `/dashboard/*` continuaron renderizando después del logout, en contradicción con la protección y limpieza exigidas. | Investigar routing, caché, renderizado y autorización de API; impedir contenido privado sin sesión válida. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional, quiero iniciar y cerrar sesión, para acceder a mi panel sin exponer datos después de finalizarla. Los escenarios de acceso protegido se conservan como criterios candidatos; redirección, limpieza, propagación y bloqueo quedan `Pendiente` hasta decisión funcional y de seguridad.
+La versión vigente de `story.md` contiene 12 escenarios verificables e incorpora las decisiones aprobadas de Producto. El requisito quedó definido; no se convierte el comportamiento observado en criterio. La discrepancia de implementación permanece bloqueante hasta contar con nueva evidencia.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Bloqueante
+* **Veredicto:** Bloqueante
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Criterios inspeccionados | `.context/PBI/epics/EPIC-BJHB-1-cuenta-y-activacion-del-profesional/stories/STORY-BJHB-11-inicio-y-cierre-de-sesion/story.md` |
-| Dashboard protegido | `.context/architecture/prd.md` · Requisitos No Funcionales |
-| Rutas renderizadas después del logout | **Observado** — producción, 30/08/2026. Evidencia: `.context/architecture/prd.md` · Seguridad observada |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-1-cuenta-y-activacion-del-profesional\stories\STORY-BJHB-11-inicio-y-cierre-de-sesion\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 1 y Requisitos No Funcionales |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-11 y decisiones transversales aplicables |
+| Comportamiento contrastado | **Observado** — producción, 30/08/2026. Evidencia: `.context/architecture/prd.md` · Seguridad observada y Fuentes. |
 
 ## Contradicciones detectadas
 
-* La protección declarada del dashboard contradice el renderizado observado después del logout; no se decide si falla la UI, la caché o la autorización.
+* La especificación y la decisión de Producto exigen proteger /dashboard/*, limpiar los datos privados y redirigir a /login; producción permitió renderizar rutas después del logout el 30/08/2026. El requisito queda definido y la discrepancia pasa a investigación técnica.
 
 ## Preguntas abiertas
 
-* ¿Qué debe mostrarse y qué datos deben eliminarse después del logout?
-* ¿Cómo se limitan los intentos fallidos?
+* ¿La exposición observada después del logout se debe a routing, caché, renderizado o autorización incompleta de la API?

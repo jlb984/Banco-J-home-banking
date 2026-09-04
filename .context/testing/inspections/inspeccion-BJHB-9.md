@@ -1,37 +1,37 @@
-# Reporte de Inspección de Requisitos: Carga manual de cliente
+# Reporte de Inspección de Requisitos: Carga manual de un cliente
 
 **Historia:** BJHB-9
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-9-D1 | Contradice al sistema | «Nuevo Cliente» no produjo formulario ni cambio visible. | Confirmar si está roto, pendiente o condicionado. |
-| BJHB-9-D2 | Regla de negocio | No se define el resultado para un correo ya asociado. | Acordar rechazo, reutilización o actualización. |
-| BJHB-9-D3 | Completitud | Faltan máximos, normalización y mensajes. | Especificar validaciones y respuesta al límite. |
+| BJHB-9-D1 | Contradice al sistema | La acción `Nuevo Cliente` no abrió el formulario ni produjo un cambio visible en la observación. | Corregir o explicar la acción para que abra el formulario definido, y verificarla en el build de QA. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional, quiero asociar manualmente un cliente nuevo mediante nombre y correo válidos, respetando el límite de diez. El tratamiento de existentes, validaciones y mensajes queda `Pendiente`; la función continúa sin verificación exitosa.
+La versión vigente de `story.md` contiene 7 escenarios verificables e incorpora las decisiones aprobadas de Producto. El requisito quedó definido; no se convierte el comportamiento observado en criterio. La discrepancia de implementación permanece bloqueante hasta contar con nueva evidencia.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Bloqueante
+* **Veredicto:** Bloqueante
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Criterios inspeccionados | `.context/PBI/epics/EPIC-BJHB-6-clientes-y-limite-freemium/stories/STORY-BJHB-9-carga-manual-de-cliente/story.md` |
-| Botón sin respuesta | **Observado** — producción, 30/08/2026. Evidencia: `.context/architecture/prd.md` · Feature 5 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-6-clientes-y-limite-freemium\stories\STORY-BJHB-9-carga-manual-de-cliente\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 5 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-9 y decisiones transversales aplicables |
+| Comportamiento contrastado | **Observado** — producción, 30/08/2026 mediante Playwright; no se realizó ningún alta. Evidencia: `.context/architecture/prd.md` · Feature 5 y Fuentes. |
 
 ## Contradicciones detectadas
 
-* La función está en el alcance, pero la acción observada no abrió el alta.
+* La documentación y la decisión de Producto exigen un formulario de alta; la acción «Nuevo Cliente» no produjo cambios visibles durante la observación. La discrepancia queda como defecto de implementación.
 
 ## Preguntas abiertas
 
-* ¿La acción está rota, pendiente o condicionada, y cómo trata correos existentes?
+* ¿Por qué la acción «Nuevo Cliente» no abrió el formulario durante la observación de producción?

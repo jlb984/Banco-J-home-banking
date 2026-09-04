@@ -4,7 +4,8 @@
 **Epic:** BJHB-3
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,9 +18,9 @@ Como profesional, quiero registrar un turno manualmente, para incorporar reserva
 | Independiente | No | Depende de clientes, disponibilidad y límite freemium. |
 | Negociable | Sí | El resultado está definido; el flujo de selección sigue abierto. |
 | Valiosa | Sí | Incorpora reservas acordadas por otros canales. |
-| Estimable | No | No se definieron los campos ni si admite horarios fuera de disponibilidad. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Crea un turno desde el panel. |
-| Testeable | No | La creación y superposición son comprobables, pero faltan reglas de entrada. |
+| Testeable | Sí | Los criterios incorporan resultados observables y valores aprobados para el release 1.1. |
 
 ## Criterios de Aceptación (Gherkin)
 
@@ -46,6 +47,35 @@ Como profesional, quiero registrar un turno manualmente, para incorporar reserva
 **Then** el sistema rechaza la incorporación del nuevo cliente
 **And** no crea el turno
 
+### Escenario 4: Crear una excepción fuera de la disponibilidad
+**Given** que el horario futuro está fuera de la disponibilidad semanal y no está bloqueado ni ocupado
+**When** el profesional registra manualmente el turno
+**Then** el sistema crea el turno como excepción
+**And** lo asocia con el cliente seleccionado
+
+### Escenario 5: Reutilizar un cliente existente
+**Given** que el correo normalizado ya pertenece a un cliente del profesional
+**When** registra un turno manual con ese correo
+**Then** el sistema reutiliza el cliente existente
+**And** no cambia silenciosamente su nombre
+
+### Escenario 6: Evitar un turno duplicado por reintento
+**Given** que una operación manual ya creó el turno con una clave de idempotencia
+**When** se repite la solicitud con la misma clave
+**Then** el sistema devuelve el turno existente
+**And** no crea otro turno
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-17 y decisiones transversales aplicables.
+
+* Se puede seleccionar un cliente existente o crear uno con nombre y correo bajo las reglas de BJHB-2.
+* Se requieren cliente, fecha y hora futura. Se admite una nota opcional de hasta 250 caracteres.
+* El profesional puede crear un turno fuera de su disponibilidad semanal como excepción manual.
+* No puede crear un turno dentro de un bloqueo ni superpuesto con otro `confirmed`; primero debe eliminar el bloqueo o elegir otro horario.
+* Si el correo ya pertenece a un cliente del profesional, se reutiliza el registro y no se cambia su nombre silenciosamente.
+* La interfaz deshabilita el envío mientras procesa y el servidor usa una clave de idempotencia. Repetir la misma operación devuelve el turno ya creado.
+
 ## Notas de QA
 
 * Probar cliente existente, cliente nuevo décimo y cliente nuevo número once.
@@ -54,7 +84,7 @@ Como profesional, quiero registrar un turno manualmente, para incorporar reserva
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-17.md`
 
@@ -65,14 +95,13 @@ Como profesional, quiero registrar un turno manualmente, para incorporar reserva
 | Existencia de turnos cargados manualmente | `.context/Confluence-corporativo/05-hilo-mail-cambio-de-alcance.md` · métricas del soft launch; `.context/Confluence-corporativo/06-tickets-soporte-resumen.md` · ticket #33 |
 | Asociación, estado y ausencia de superposición | `.context/Confluence-corporativo/04-notas-tecnicas.md` · Tablas y reserva; `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · secciones 5.2 y 9 |
 | Aplicación del límite a altas manuales | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 8.1 |
-| Flujo del panel para seleccionar cliente y horario | **Hipótesis** — la documentación no describe la interfaz de carga manual |
+| Flujo del panel para seleccionar cliente y horario | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-17 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-17 |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué datos se solicitan al crear un cliente durante el alta del turno?
-* ¿Puede registrarse un turno fuera de la disponibilidad semanal o dentro de un bloqueo?
-* ¿Qué comportamiento se espera ante el reenvío o doble clic de la misma operación?
+* Ninguna pendiente de decisión funcional.

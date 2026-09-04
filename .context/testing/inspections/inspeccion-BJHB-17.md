@@ -1,38 +1,36 @@
-# Reporte de Inspección de Requisitos: Registro manual de turno
+# Reporte de Inspección de Requisitos: Registro manual de un turno
 
 **Historia:** BJHB-17
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-17-D1 | Completitud | No se definen campos ni validaciones del alta. | Especificar cliente, horario y datos obligatorios. |
-| BJHB-17-D2 | Regla de negocio | No se aclara si admite horarios fuera de disponibilidad o bloqueados. | Acordar excepciones del profesional. |
-| BJHB-17-D3 | Integridad | No se define idempotencia ante doble envío. | Incorporar una garantía contra duplicados. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional autenticado, quiero crear un único turno `confirmed` para un cliente y horario no ocupado. Los campos, excepciones de disponibilidad y comportamiento ante reenvíos quedan `Pendiente`; el límite de diez clientes se aplica a clientes nuevos.
+La versión vigente de `story.md` contiene 6 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Criterios inspeccionados | `.context/PBI/epics/EPIC-BJHB-3-agenda-disponibilidad-y-gestion-de-turnos/stories/STORY-BJHB-17-registro-manual-de-turno/story.md` |
-| Alcance de agenda | `.context/architecture/prd.md` · Feature 2 |
-| Idempotencia | **Hipótesis** — no hay regla acordada |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-3-agenda-disponibilidad-y-gestion-de-turnos\stories\STORY-BJHB-17-registro-manual-de-turno\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 2 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-17 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué campos, excepciones de agenda y protección contra reenvíos se requieren?
+* Ninguna pendiente de decisión funcional.

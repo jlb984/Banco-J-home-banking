@@ -1,37 +1,36 @@
-# Reporte de Inspección de Requisitos: Conflicto de reserva concurrente
+# Reporte de Inspección de Requisitos: Resolución de un conflicto de reserva concurrente
 
 **Historia:** BJHB-22
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-22-D1 | Contradicción técnica | Se exige unicidad, pero la validación documentada no es transaccional. | Hacer verificable una garantía atómica en persistencia. |
-| BJHB-22-D2 | Completitud | No se define el texto literal ni accesibilidad del conflicto. | Acordar mensaje y anuncio de la actualización. |
-| BJHB-22-D3 | Caso borde | No se define cuánto se conservan los datos ni si la unicidad cubre otros canales. | Acordar ciclo de vida y alcance global. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como cliente, quiero que solo una solicitud gane un slot concurrente y que la perdedora conserve nombre y correo para elegir otro. Mensaje, duración de conservación y alcance entre canales quedan `Pendiente`; la unicidad debe comprobarse en persistencia.
+La versión vigente de `story.md` contiene 5 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Escenarios y riesgo técnico | `.context/PBI/epics/EPIC-BJHB-4-pagina-publica-y-auto-reserva/stories/STORY-BJHB-22-conflicto-de-reserva-concurrente/story.md` |
-| Carrera conocida | `.context/architecture/prd.md` · Feature 3 y Riesgos |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-4-pagina-publica-y-auto-reserva\stories\STORY-BJHB-22-conflicto-de-reserva-concurrente\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 3 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-22 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* La garantía funcional de no superposición no está respaldada por el mecanismo técnico documentado.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué mensaje, tiempo de conservación y alcance tiene la garantía de unicidad?
+* Ninguna pendiente de decisión funcional.

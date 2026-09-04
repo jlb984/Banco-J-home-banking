@@ -4,7 +4,8 @@
 **Epic:** BJHB-5
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,7 +18,7 @@ Como parte de un turno cancelado, quiero recibir un aviso, para conocer el cambi
 | Independiente | No | Depende de una cancelación exitosa de BJHB-23 o BJHB-24. |
 | Negociable | Sí | Destinatario y contenido mínimo están definidos. |
 | Valiosa | Sí | Informa oportunamente el cambio a la contraparte. |
-| Estimable | No | No existe regla acordada para fallas de entrega. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Cubre la notificación derivada de cancelar. |
 | Testeable | Sí | Destinatario, contenido y ausencia de envío al actor son comprobables. |
 
@@ -43,6 +44,37 @@ Como parte de un turno cancelado, quiero recibir un aviso, para conocer el cambi
 **When** falla el envío del aviso
 **Then** el sistema conserva el estado cancelado
 
+### Escenario 4: Incluir el detalle de la cancelación
+**Given** que una cancelación quedó persistida
+**When** el sistema genera el aviso a la contraparte
+**Then** incluye quién canceló, profesional, fecha, hora, zona y estado «Cancelado»
+**And** no envía el aviso al mismo actor que canceló
+
+### Escenario 5: Reintentar una entrega fallida
+**Given** que la cancelación ya quedó persistida y falla el primer envío
+**When** se procesa la política de correo
+**Then** el sistema reintenta después de 1 minuto, 10 minutos y 1 hora
+**And** no revierte la cancelación
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-25 y decisiones transversales aplicables.
+
+**Política común de correos de producto**
+
+* Resend es el proveedor para bienvenida, reserva, cancelación y recordatorio. Supabase se conserva para autenticación y recuperación.
+* Cada evento funcional tiene un identificador idempotente para evitar correos duplicados.
+* Ante fallo se realizan tres reintentos: después de 1 minuto, 10 minutos y 1 hora.
+* Agotados los reintentos, el evento queda `failed`, se registra en monitoreo y se alerta al equipo. No se revierte una cuenta, reserva o cancelación ya persistida.
+* La interfaz informa éxito de la operación principal y, cuando el usuario autenticado sea el actor, advierte `La operación se completó, pero no pudimos enviar el correo.`
+
+**Decisión específica de BJHB-25**
+
+* Si cancela el cliente se notifica solo al profesional; si cancela el profesional se notifica solo al cliente.
+* El aviso incluye quién canceló, nombre del profesional, fecha, hora, zona horaria y estado `Cancelado`.
+* El correo se genera únicamente después de persistir la cancelación.
+* Una falla de entrega no revierte la cancelación y usa la política común de reintentos.
+
 ## Notas de QA
 
 * Usar buzones sintéticos y comprobar destinatario, ausencia de duplicados y contenido.
@@ -51,7 +83,7 @@ Como parte de un turno cancelado, quiero recibir un aviso, para conocer el cambi
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-25.md`
 
@@ -61,14 +93,13 @@ Como parte de un turno cancelado, quiero recibir un aviso, para conocer el cambi
 | :--- | :--- |
 | Destinatario y contenido del aviso | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · secciones 6.3 y 7 |
 | Existencia actual del correo de cancelación | `.context/Confluence-corporativo/05-hilo-mail-cambio-de-alcance.md` · correo del 28/02/2026 |
-| Manejo de una falla de correo posterior a cancelar | **Hipótesis** — la documentación indica envíos sincrónicos, pero no define atomicidad entre estado y notificación |
+| Manejo de una falla de correo posterior a cancelar | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-25 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-25 |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué datos del turno debe contener el aviso?
-* ¿Cuántos reintentos se realizan ante una falla y cómo se informa al actor?
-* ¿Negocio confirma que una falla de correo no revierte la cancelación?
+* Ninguna pendiente de decisión funcional.

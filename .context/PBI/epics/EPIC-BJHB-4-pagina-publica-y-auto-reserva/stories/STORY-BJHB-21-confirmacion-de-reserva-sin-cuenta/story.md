@@ -4,7 +4,8 @@
 **Epic:** BJHB-4
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -32,19 +33,53 @@ Como cliente final, quiero confirmar un turno sin crear una cuenta, para reserva
 **And** crea un único turno con estado `confirmed`
 **And** muestra la confirmación de la operación sin requerir aprobación previa
 
-### Escenario 2: Rechazar datos obligatorios inválidos
-
-**Given** que el nombre está vacío o el correo está vacío o tiene formato inválido
+### Escenario 2: Rechazar un nombre vacío
+**Given** que el nombre está vacío
 **When** el cliente intenta confirmar
 **Then** el sistema rechaza la solicitud
-**And** no crea el turno
+**And** muestra «Completa este campo.»
 
-### Escenario 3: Rechazar un horario que dejó de estar disponible
+### Escenario 3: Rechazar un correo vacío
+**Given** que el correo está vacío
+**When** el cliente intenta confirmar
+**Then** el sistema rechaza la solicitud
+**And** muestra «Completa este campo.»
+
+### Escenario 4: Rechazar un correo inválido
+**Given** que el correo tiene formato inválido
+**When** el cliente intenta confirmar
+**Then** el sistema rechaza la solicitud
+**And** muestra «Ingresa un correo electrónico válido.»
+
+### Escenario 5: Rechazar un horario que dejó de estar disponible
 
 **Given** que el horario seleccionado fue ocupado antes de la confirmación
 **When** el cliente confirma la reserva
 **Then** el sistema no crea el turno
 **And** aplica el flujo de conflicto definido en BJHB-22
+
+### Escenario 6: Mostrar el detalle de una reserva confirmada
+**Given** que el cliente completó una reserva válida
+**When** el sistema confirma el turno
+**Then** muestra «Tu turno fue reservado»
+**And** presenta profesional, fecha, hora y zona
+**And** informa que el enlace de cancelación llegará por correo
+
+### Escenario 7: Evitar duplicados ante un reintento
+**Given** que una solicitud ya creó un turno con una clave de idempotencia
+**When** se repite dentro de diez minutos con la misma clave
+**Then** el sistema devuelve el turno existente
+**And** no crea otra reserva
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-21 y decisiones transversales aplicables.
+
+* Nombre y correo usan las mismas reglas de normalización y máximos de BJHB-2. No se solicita contraseña.
+* La confirmación visible muestra `Tu turno fue reservado`, profesional, fecha, hora, zona y aviso de que el enlace de cancelación llegará por correo.
+* El cliente no necesita aprobación posterior del profesional.
+* La UI genera una clave de idempotencia por intento. Repetir durante 10 minutos la misma solicitud con esa clave devuelve el turno existente y no genera otro.
+* Reservar para otra persona queda fuera de alcance según la sección 2.5.
 
 ## Notas de QA
 
@@ -54,7 +89,7 @@ Como cliente final, quiero confirmar un turno sin crear una cuenta, para reserva
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-21.md`
 
@@ -65,14 +100,13 @@ Como cliente final, quiero confirmar un turno sin crear una cuenta, para reserva
 | Reserva con nombre y correo, sin cuenta | `.context/Confluence-corporativo/01-minuta-kickoff.md` · Los dos usuarios del sistema; `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 5.1 |
 | Revalidación antes de guardar | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · RN-02 |
 | Estado confirmado sin aprobación | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 9 |
-| Rechazo de nombre o correo inválidos | **Hipótesis** — no hay mensajes ni validaciones completas documentadas para este formulario |
+| Rechazo de nombre o correo inválidos | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-21 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-21 |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Cuáles son los máximos y reglas de normalización de nombre y correo?
-* ¿Qué mensaje confirma la reserva y qué datos contiene?
-* ¿Cómo se evita crear duplicados ante reintentos de la misma solicitud?
+* Ninguna pendiente de decisión funcional.

@@ -4,7 +4,8 @@
 **Epic:** BJHB-3
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,9 +18,9 @@ Como profesional, quiero bloquear períodos puntuales, para evitar reservas cuan
 | Independiente | Sí | Puede comprobarse sobre una agenda configurada. |
 | Negociable | Sí | El bloqueo está definido; el tratamiento de turnos existentes está abierto. |
 | Valiosa | Sí | Evita reservas durante ausencias excepcionales. |
-| Estimable | No | La interacción con turnos ya confirmados cambia sustancialmente el alcance. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Cubre alta, consulta y eliminación de una excepción de agenda. |
-| Testeable | No | Los nuevos slots son verificables; falta el resultado esperado para turnos existentes. |
+| Testeable | Sí | Los criterios incorporan resultados observables y valores aprobados para el release 1.1. |
 
 ## Criterios de Aceptación (Gherkin)
 
@@ -45,6 +46,29 @@ Como profesional, quiero bloquear períodos puntuales, para evitar reservas cuan
 **Then** el sistema lo retira del listado
 **And** vuelve a calcular los horarios futuros que ya no estén bloqueados ni reservados
 
+### Escenario 4: Advertir sobre turnos incluidos en un bloqueo
+**Given** que el período elegido contiene turnos confirmados
+**When** el profesional intenta guardar el bloqueo
+**Then** el sistema informa cuántos turnos quedan dentro
+**And** advierte que continuarán confirmados hasta que se cancelen manualmente
+
+### Escenario 5: Unificar bloqueos superpuestos
+**Given** que el profesional registra dos bloqueos superpuestos
+**When** el sistema calcula la disponibilidad
+**Then** evalúa la unión de ambos intervalos
+**And** no ofrece slots dentro de esa unión
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-16 y decisiones transversales aplicables.
+
+* El bloqueo se guarda y muestra en la zona del profesional; la API usa UTC.
+* No se permite crear un bloqueo cuyo fin sea pasado ni cuyo fin sea igual o anterior al inicio.
+* Se permiten bloqueos superpuestos; para disponibilidad se evalúa la unión de los intervalos.
+* Un bloqueo puede cruzar medianoche porque utiliza fechas e instantes completos.
+* Los turnos ya confirmados permanecen confirmados. Antes de guardar se muestra cuántos quedan dentro del bloqueo y se advierte que deben cancelarse manualmente si corresponde.
+* El bloqueo impide únicamente nuevas reservas. Eliminarlo recalcula los slots que no estén ocupados por turnos.
+
 ## Notas de QA
 
 * Probar bloqueos parciales, de día completo y superpuestos entre sí.
@@ -53,7 +77,7 @@ Como profesional, quiero bloquear períodos puntuales, para evitar reservas cuan
 
 ## Inspección Shift-Left
 
-**Resultado:** Bloqueante
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-16.md`
 
@@ -63,14 +87,13 @@ Como profesional, quiero bloquear períodos puntuales, para evitar reservas cuan
 | :--- | :--- |
 | Rango, motivo opcional y exclusión de horarios | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 4.3 |
 | Consulta, creación y eliminación de bloqueos | `.context/Confluence-corporativo/04-notas-tecnicas.md` · Endpoints |
-| No alterar silenciosamente turnos existentes | **Hipótesis** — la documentación mantiene abierta la regla y soporte confirma que actualmente permanecen confirmados |
+| No alterar silenciosamente turnos existentes | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-16 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-16 |
 
 ## Contradicciones detectadas
 
-* Ninguna entre las fuentes; el tratamiento de turnos confirmados dentro del bloqueo no fue definido.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué ocurre con los turnos ya confirmados dentro del período bloqueado?
-* ¿Se permiten bloqueos superpuestos y bloqueos en el pasado?
-* ¿Qué zona horaria rige el inicio y el fin?
+* Ninguna pendiente de decisión funcional.

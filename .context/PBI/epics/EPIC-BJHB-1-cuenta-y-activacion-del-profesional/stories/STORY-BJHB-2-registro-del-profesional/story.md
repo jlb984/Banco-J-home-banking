@@ -4,7 +4,8 @@
 **Epic:** BJHB-1
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -37,17 +38,28 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** envía el correo de bienvenida al profesional
 
-### Escenario 2: Rechazo de campos obligatorios vacíos
-
-**Given** que el profesional deja vacío el nombre completo, el correo electrónico o la contraseña
-
+### Escenario 2: Rechazo del nombre obligatorio vacío
+**Given** que el profesional deja vacío el nombre completo
 **When** intenta enviar el formulario de registro
-
 **Then** el sistema rechaza el registro
-
+**And** muestra «Completa este campo.»
 **And** no crea la cuenta
 
-### Escenario 3: Rechazo de un nombre que supera el máximo
+### Escenario 3: Rechazo del correo obligatorio vacío
+**Given** que el profesional deja vacío el correo electrónico
+**When** intenta enviar el formulario de registro
+**Then** el sistema rechaza el registro
+**And** muestra «Completa este campo.»
+**And** no crea la cuenta
+
+### Escenario 4: Rechazo de la contraseña obligatoria vacía
+**Given** que el profesional deja vacía la contraseña
+**When** intenta enviar el formulario de registro
+**Then** el sistema rechaza el registro
+**And** muestra «Completa este campo.»
+**And** no crea la cuenta
+
+### Escenario 5: Rechazo de un nombre que supera el máximo
 
 **Given** que el profesional informa un nombre completo de más de 100 caracteres
 
@@ -57,7 +69,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** no crea la cuenta
 
-### Escenario 4: Rechazo de un correo con formato inválido
+### Escenario 6: Rechazo de un correo con formato inválido
 
 **Given** que el profesional informa un correo electrónico con formato inválido
 
@@ -67,7 +79,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** no crea la cuenta
 
-### Escenario 5: Rechazo de un correo que supera el máximo
+### Escenario 7: Rechazo de un correo que supera el máximo
 
 **Given** que el profesional informa un correo electrónico de más de 254 caracteres
 
@@ -77,7 +89,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** no crea la cuenta
 
-### Escenario 6: Rechazo de un correo ya registrado
+### Escenario 8: Rechazo de un correo ya registrado
 
 **Given** que ya existe una cuenta con el correo electrónico informado
 
@@ -89,7 +101,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** no crea una segunda cuenta
 
-### Escenario 7: Rechazo de una contraseña demasiado corta
+### Escenario 9: Rechazo de una contraseña demasiado corta
 
 **Given** que el profesional informa una contraseña de menos de 8 caracteres
 
@@ -99,7 +111,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** no crea la cuenta
 
-### Escenario 8: Rechazo de una contraseña sin mayúscula
+### Escenario 10: Rechazo de una contraseña sin mayúscula
 
 **Given** que el profesional informa una contraseña de al menos 8 caracteres y con un número, pero sin ninguna letra mayúscula
 
@@ -109,7 +121,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** no crea la cuenta
 
-### Escenario 9: Rechazo de una contraseña sin número
+### Escenario 11: Rechazo de una contraseña sin número
 
 **Given** que el profesional informa una contraseña de al menos 8 caracteres y con una letra mayúscula, pero sin ningún número
 
@@ -119,7 +131,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 **And** no crea la cuenta
 
-### Escenario 10: Generación de una URL única ante nombres coincidentes
+### Escenario 12: Generación de una URL única ante nombres coincidentes
 
 **Given** que ya existe en la plataforma una URL pública generada a partir del mismo nombre completo
 
@@ -128,6 +140,43 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 **Then** el sistema agrega a la URL un sufijo numérico incremental que no esté utilizado
 
 **And** la URL resultante es única en toda la plataforma
+
+### Escenario 13: Normalizar nombre y correo antes del alta
+**Given** que el profesional informa nombre y correo con espacios exteriores y mayúsculas en el correo
+**When** envía un registro válido
+**Then** el sistema recorta los espacios exteriores del nombre
+**And** conserva sus caracteres Unicode y espacios internos
+**And** guarda y compara el correo en minúsculas
+
+### Escenario 14: Recuperar un onboarding incompleto
+**Given** que Auth creó la cuenta pero el proceso de onboarding quedó incompleto
+**When** el profesional vuelve a ingresar
+**Then** el sistema reintenta idempotentemente los pasos faltantes
+**And** no crea una segunda cuenta
+
+### Escenario 15: Completar el alta aunque falle la bienvenida
+**Given** que la cuenta, la sesión y el onboarding quedaron creados
+**When** falla el envío del correo de bienvenida
+**Then** el sistema conserva el alta exitosa
+**And** registra el fallo para aplicar la política de reintentos
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-2 y decisiones transversales aplicables.
+
+* El nombre se recorta al inicio y al final, conserva acentos y espacios internos, y debe contener entre 1 y 100 caracteres Unicode.
+* El correo se recorta, se guarda en minúsculas y se compara sin distinguir mayúsculas. Su máximo es 254 caracteres.
+* La contraseña debe contener entre 8 y 72 caracteres, al menos una mayúscula y un número.
+* Mensajes aprobados:
+  * Campo vacío: `Completa este campo.`
+  * Nombre extenso: `El nombre no puede superar los 100 caracteres.`
+  * Correo inválido: `Ingresa un correo electrónico válido.`
+  * Correo extenso: `El correo no puede superar los 254 caracteres.`
+  * Correo duplicado: `El email ya está en uso.` y enlace a recuperación.
+  * Contraseña inválida: `La contraseña debe tener entre 8 y 72 caracteres, una mayúscula y un número.`
+* No se exige confirmar el correo antes de utilizar la cuenta. El registro válido inicia sesión inmediatamente.
+* Si se creó el usuario de Auth pero falló perfil, slug o configuración inicial, la cuenta queda en onboarding incompleto. El siguiente ingreso reintenta idempotentemente los pasos faltantes y nunca crea otra cuenta.
+* Una falla del correo de bienvenida no revierte el alta. Se registra el fallo y se reintenta según la política de correos de la sección 7.
 
 ## Notas de QA
 
@@ -139,7 +188,7 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-2.md`
 
@@ -156,15 +205,12 @@ Como profesional, quiero registrarme con mi nombre completo, correo electrónico
 | El registro crea la cuenta y la sesión, genera la URL, redirige a la configuración y envía la bienvenida | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · secciones 3.1 y 7; `.context/architecture/prd.md` · Feature 1 y User Journeys |
 | La URL se normaliza desde el nombre y resuelve colisiones con un sufijo numérico incremental | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 3.4 |
 | Los correos de producto se envían mediante Resend | `.context/Confluence-corporativo/05-hilo-mail-cambio-de-alcance.md` · resumen del 03/03/2026 y correo del 28/02/2026 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-2 |
 
 ## Contradicciones detectadas
 
-* La especificación exige una contraseña de al menos 8 caracteres, con una mayúscula y un número; `.context/PBI/epic-tree.md` y `.context/architecture/prd.md` indican que no existe evidencia actual de que la interfaz y Supabase apliquen exactamente esas reglas. Se conserva la especificación como comportamiento esperado y la implementación permanece `Sin verificar`.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué mensajes deben mostrarse cuando falta un campo, el nombre o correo superan su máximo, el correo tiene formato inválido o la contraseña no contiene una mayúscula o un número?
-* ¿Se eliminan espacios al inicio y al final del nombre y del correo antes de validar y guardar?
-* ¿Los correos se normalizan para detectar duplicados sin distinguir mayúsculas y minúsculas?
-* ¿Qué debe ocurrir y qué debe ver el profesional si se crea la cuenta, pero falla la generación de la URL, la redirección o el envío del correo de bienvenida?
-* ¿El registro requiere confirmar el correo electrónico antes de permitir usar la cuenta, o la sesión automática queda habilitada inmediatamente?
+* Ninguna pendiente de decisión funcional.

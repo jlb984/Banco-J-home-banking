@@ -1,39 +1,36 @@
 # Reporte de Inspección de Requisitos: Registro del profesional
 
 **Historia:** BJHB-2
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-2-D1 | Completitud | No se define normalización de nombre y correo ni la unidad de sus máximos. | Acordar trim, comparación sin mayúsculas y conteo de caracteres. |
-| BJHB-2-D2 | Caso borde | No se define la recuperación si cuenta, URL, sesión o correo fallan parcialmente. | Especificar atomicidad, reintentos y mensaje para cada fallo. |
-| BJHB-2-D3 | Contradicción contra evidencia | La URL debe generarse, pero no se encontró cómo localizarla en la experiencia autenticada. | Separar generación de exposición y resolver BJHB-13. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional, quiero registrarme con nombre, correo y contraseña válidos, para crear una única cuenta, iniciar sesión y obtener una URL pública única. Se conservan los diez escenarios de `story.md`; la normalización, los fallos parciales y la exposición de la URL quedan marcados `Pendiente` y no deben asumirse como aprobados.
+La versión vigente de `story.md` contiene 15 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Reglas y escenarios inspeccionados | `.context/PBI/epics/EPIC-BJHB-1-cuenta-y-activacion-del-profesional/stories/STORY-BJHB-2-registro-del-profesional/story.md` |
-| Registro, sesión y URL pública | `.context/architecture/prd.md` · Feature 1 |
-| URL no localizada | **Observado** — producción, 30/08/2026. Evidencia: `.context/architecture/prd.md` · Feature 1 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-1-cuenta-y-activacion-del-profesional\stories\STORY-BJHB-2-registro-del-profesional\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 1 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-2 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* La URL se genera según la especificación, pero no se encontró expuesta en el producto; generación y acceso no pueden considerarse el mismo resultado.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Cómo se normalizan y cuentan nombre y correo?
-* ¿Qué resultado corresponde a cada fallo parcial del alta?
+* Ninguna pendiente de decisión funcional.

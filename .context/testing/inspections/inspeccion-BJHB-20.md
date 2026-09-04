@@ -1,37 +1,36 @@
-# Reporte de Inspección de Requisitos: Página pública del profesional
+# Reporte de Inspección de Requisitos: Acceso a la página pública del profesional
 
 **Historia:** BJHB-20
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-20-D1 | Privacidad | No se enumeran los datos públicos ni privados del perfil. | Definir una lista permitida de campos. |
-| BJHB-20-D2 | Caso borde | No se define respuesta para slug inexistente. | Acordar estado, mensaje y código HTTP. |
-| BJHB-20-D3 | Completitud | No se define la página sin disponibilidad configurada. | Especificar estado vacío sin habilitar reservas inválidas. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como cliente anónimo, quiero abrir el perfil correspondiente a un slug válido sin exponer información privada. La lista de campos, respuesta de slug inexistente y estado sin disponibilidad quedan `Pendiente`.
+La versión vigente de `story.md` contiene 5 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Medio
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Criterios y vacíos | `.context/PBI/epics/EPIC-BJHB-4-pagina-publica-y-auto-reserva/stories/STORY-BJHB-20-acceso-a-pagina-publica/story.md` |
-| Página pública sin cuenta | `.context/architecture/prd.md` · Feature 3 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-4-pagina-publica-y-auto-reserva\stories\STORY-BJHB-20-acceso-a-pagina-publica\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 3 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-20 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* El dominio histórico difiere del vigente; la historia ya prioriza la fuente más reciente.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué campos son públicos y qué respuestas corresponden a slug inexistente o sin disponibilidad?
+* Ninguna pendiente de decisión funcional.

@@ -1,38 +1,36 @@
 # Reporte de Inspección de Requisitos: Confirmación de reserva sin cuenta
 
 **Historia:** BJHB-21
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-21-D1 | Completitud | No se definen máximos ni normalización de nombre y correo. | Acordar particiones y mensajes. |
-| BJHB-21-D2 | Integridad | No se define idempotencia ante reintento o doble clic. | Incorporar una clave o regla verificable contra duplicados. |
-| BJHB-21-D3 | Completitud | No se especifican contenido ni persistencia de la confirmación visible. | Definir los datos mostrados tras reservar. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como cliente sin cuenta, quiero confirmar una única reserva con nombre y correo válidos después de revalidar el slot. Máximos, normalización, idempotencia y contenido de confirmación quedan `Pendiente`.
+La versión vigente de `story.md` contiene 7 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Historia inspeccionada | `.context/PBI/epics/EPIC-BJHB-4-pagina-publica-y-auto-reserva/stories/STORY-BJHB-21-confirmacion-de-reserva-sin-cuenta/story.md` |
-| Revalidación y estado `confirmed` | `.context/architecture/prd.md` · Feature 3 |
-| Idempotencia | **Hipótesis** — no hay regla acordada |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-4-pagina-publica-y-auto-reserva\stories\STORY-BJHB-21-confirmacion-de-reserva-sin-cuenta\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 3 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-21 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué validaciones, protección contra reintentos y confirmación visual se requieren?
+* Ninguna pendiente de decisión funcional.

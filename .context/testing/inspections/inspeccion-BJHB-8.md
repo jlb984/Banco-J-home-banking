@@ -1,37 +1,36 @@
-# Reporte de Inspección de Requisitos: Límite de diez clientes
+# Reporte de Inspección de Requisitos: Límite de diez clientes únicos del plan gratuito
 
 **Historia:** BJHB-8
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-8-D1 | Regla de negocio | No se define normalización del correo para contar únicos. | Acordar una identidad canónica. |
-| BJHB-8-D2 | Caso borde | No se define si cancelados o eliminados siguen contando. | Fijar ciclo de vida del contador. |
-| BJHB-8-D3 | Completitud | El mensaje al cliente no tiene texto verificable. | Acordar contenido y canal de contacto. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como responsable del producto, quiero limitar cada profesional gratuito a diez clientes únicos por correo, permitiendo reservas ilimitadas a los existentes y bloqueando al nuevo número once en ambos canales. Normalización, bajas y texto quedan `Pendiente`.
+La versión vigente de `story.md` contiene 7 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Regla y vacíos | `.context/PBI/epics/EPIC-BJHB-6-clientes-y-limite-freemium/stories/STORY-BJHB-8-limite-de-diez-clientes-unicos/story.md` |
-| Límite y canales | `.context/architecture/prd.md` · Feature 5 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-6-clientes-y-limite-freemium\stories\STORY-BJHB-8-limite-de-diez-clientes-unicos\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 5 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-8 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Cómo se normalizan y depuran clientes del contador y cuál es el mensaje literal?
+* Ninguna pendiente de decisión funcional.

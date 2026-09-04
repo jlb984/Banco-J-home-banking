@@ -1,37 +1,36 @@
-# Reporte de Inspección de Requisitos: Duración estándar
+# Reporte de Inspección de Requisitos: Duración estándar de los turnos
 
 **Historia:** BJHB-14
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-14-D1 | Contradicción | La especificación admite cualquier entero positivo y la UI solo seis valores. | Producto debe fijar el dominio válido. |
-| BJHB-14-D2 | Completitud | No se define el efecto sobre turnos futuros al cambiar la duración. | Preservar o recalcular explícitamente. |
-| BJHB-14-D3 | Caso borde | No se acuerda cómo tratar el remanente de un bloque. | Definir si se descarta y con qué regla. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional, quiero definir una duración estándar admitida para dividir mis bloques en turnos completos. El conjunto admitido, el remanente y el efecto sobre turnos existentes quedan `Pendiente`; no se transforma la UI observada en regla de negocio.
+La versión vigente de `story.md` contiene 5 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Bloqueante
-* **Riesgo:** Alto
+* **Veredicto:** Aprobado
+* **Riesgo:** Medio
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Contradicción y criterios | `.context/PBI/epics/EPIC-BJHB-3-agenda-disponibilidad-y-gestion-de-turnos/stories/STORY-BJHB-14-duracion-estandar-de-turnos/story.md` |
-| Opciones observadas | **Observado** — producción, 30/08/2026. Evidencia: `.context/architecture/prd.md` · Feature 2 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-3-agenda-disponibilidad-y-gestion-de-turnos\stories\STORY-BJHB-14-duracion-estandar-de-turnos\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 2 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-14 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* Entero positivo documentado frente a opciones 15, 30, 45, 60, 90 y 120 observadas.
+* La especificación histórica admitía cualquier entero positivo y la interfaz observada ofrecía un catálogo cerrado. Producto adopta 15, 30, 45, 60, 90 y 120 minutos para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué duraciones son válidas y qué ocurre con remanentes y turnos existentes?
+* Ninguna pendiente de decisión funcional.

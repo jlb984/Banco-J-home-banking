@@ -4,7 +4,8 @@
 **Epic:** BJHB-6
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,7 +18,7 @@ Como profesional, quiero consultar mi listado de clientes, para conocer a las pe
 | Independiente | Sí | Puede probarse con clientes y turnos preparados. |
 | Negociable | Sí | Alcance y unicidad están definidos; orden e historial quedan abiertos. |
 | Valiosa | Sí | Permite reconocer la base de clientes del profesional. |
-| Estimable | No | No se definieron orden, búsqueda, paginación ni datos adicionales. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Se limita a la consulta de clientes asociados. |
 | Testeable | Sí | Asociación, aislamiento y unicidad por correo son comprobables. |
 
@@ -42,6 +43,38 @@ Como profesional, quiero consultar mi listado de clientes, para conocer a las pe
 **When** el profesional autenticado consulta su listado
 **Then** el sistema no expone ese cliente
 
+### Escenario 4: Ordenar el listado de clientes
+**Given** que el profesional tiene clientes con nombres repetidos
+**When** consulta el listado
+**Then** el sistema ordena alfabéticamente por nombre
+**And** usa el correo como segundo criterio
+
+### Escenario 5: Buscar clientes
+**Given** que el profesional tiene clientes registrados
+**When** busca parcialmente por nombre
+**Then** el sistema muestra solo las coincidencias de su cuenta
+
+### Escenario 6: Paginar el listado
+**Given** que el profesional tiene más de veinte clientes
+**When** consulta la página siguiente
+**Then** el sistema presenta el bloque siguiente de hasta veinte clientes
+
+### Escenario 7: Excluir el historial del listado
+**Given** que un cliente tiene uno o más turnos
+**When** el profesional consulta el listado de clientes
+**Then** el sistema muestra una única entrada para ese correo normalizado
+**And** no incluye el historial de turnos
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-7 y decisiones transversales aplicables.
+
+* El correo se normaliza con trim y minúsculas para determinar unicidad dentro de cada profesional.
+* El listado se ordena alfabéticamente por nombre y, ante empate, por correo.
+* Pagina de a 20 y permite búsqueda parcial por nombre o correo.
+* El historial de turnos queda fuera de BJHB-7 y requiere una Story separada.
+* Solo se muestran clientes asociados con el profesional autenticado.
+
 ## Notas de QA
 
 * Preparar dos profesionales, correos repetidos y múltiples turnos.
@@ -50,7 +83,7 @@ Como profesional, quiero consultar mi listado de clientes, para conocer a las pe
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-7.md`
 
@@ -62,13 +95,12 @@ Como profesional, quiero consultar mi listado de clientes, para conocer a las pe
 | Asociación por turnos y unicidad por correo | `.context/Confluence-corporativo/04-notas-tecnicas.md` · Tablas y límite del plan gratuito |
 | Nombre y correo del cliente | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 2.2 |
 | Historial por cliente | **Pregunta abierta** — aparece como necesidad en entrevistas, pero no forma parte del comportamiento especificado |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-7 |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Cómo se normaliza el correo para determinar unicidad?
-* ¿Qué orden, búsqueda y paginación necesita el listado?
-* ¿Se incluirá historial de turnos y, de ser así, con qué alcance?
+* Ninguna pendiente de decisión funcional.

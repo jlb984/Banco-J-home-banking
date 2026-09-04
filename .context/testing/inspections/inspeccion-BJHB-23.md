@@ -1,37 +1,36 @@
-# Reporte de Inspección de Requisitos: Cancelación por enlace
+# Reporte de Inspección de Requisitos: Cancelación por el cliente mediante enlace
 
 **Historia:** BJHB-23
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-23-D1 | Seguridad | No se define vencimiento, revocación ni regeneración del token. | Acordar ciclo de vida y resistencia a manipulación. |
-| BJHB-23-D2 | Regla de negocio | No existe ventana mínima de cancelación. | Definir hasta cuándo un turno futuro puede cancelarse. |
-| BJHB-23-D3 | Caso borde | Faltan respuestas para token inválido, turno pasado o ya cancelado. | Especificar estados y mensajes verificables. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como cliente sin cuenta, quiero cancelar un turno futuro mediante su enlace único, para persistir `cancelled` y liberar el slot. Ciclo del token, ventana mínima, idempotencia y mensajes quedan `Pendiente`.
+La versión vigente de `story.md` contiene 6 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Criterios inspeccionados | `.context/PBI/epics/EPIC-BJHB-5-cancelaciones-y-comunicaciones-transaccionales/stories/STORY-BJHB-23-cancelacion-por-cliente/story.md` |
-| Cancelación futura y liberación | `.context/architecture/prd.md` · Feature 4 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-5-cancelaciones-y-comunicaciones-transaccionales\stories\STORY-BJHB-23-cancelacion-por-cliente\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 4 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-23 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué vigencia, ventana, idempotencia y respuesta tiene el enlace?
+* Ninguna pendiente de decisión funcional.

@@ -4,7 +4,8 @@
 **Epic:** BJHB-5
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,9 +18,9 @@ Como cliente final, quiero recibir un recordatorio el día anterior, para reduci
 | Independiente | Sí | Puede procesar turnos ya existentes. |
 | Negociable | Sí | El objetivo está definido; momento, zona y reintentos quedan abiertos. |
 | Valiosa | Sí | Reduce ausencias por olvido. |
-| Estimable | No | No se definieron hora de ejecución ni zona horaria. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Cubre un recordatorio automático previo. |
-| Testeable | No | No puede determinarse qué turnos pertenecen a «el día anterior» sin zona y hora acordadas. |
+| Testeable | Sí | Los criterios incorporan resultados observables y valores aprobados para el release 1.1. |
 
 ## Criterios de Aceptación (Gherkin)
 
@@ -41,6 +42,38 @@ Como cliente final, quiero recibir un recordatorio el día anterior, para reduci
 **When** el proceso vuelve a evaluar el mismo turno
 **Then** no envía un segundo recordatorio
 
+### Escenario 4: Omitir un recordatorio para una reserva reciente
+**Given** que el turno se crea con menos de veinticuatro horas de anticipación
+**When** el scheduler procesa los recordatorios
+**Then** el sistema no genera un recordatorio para ese turno
+
+### Escenario 5: Incluir el enlace solo mientras permite cancelar
+**Given** que el scheduler genera el recordatorio de un turno confirmado
+**When** compone el contenido
+**Then** incluye profesional, fecha, hora y zona
+**And** incluye el enlace de cancelación únicamente si la ventana todavía lo permite
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-26 y decisiones transversales aplicables.
+
+**Política común de correos de producto**
+
+* Resend es el proveedor para bienvenida, reserva, cancelación y recordatorio. Supabase se conserva para autenticación y recuperación.
+* Cada evento funcional tiene un identificador idempotente para evitar correos duplicados.
+* Ante fallo se realizan tres reintentos: después de 1 minuto, 10 minutos y 1 hora.
+* Agotados los reintentos, el evento queda `failed`, se registra en monitoreo y se alerta al equipo. No se revierte una cuenta, reserva o cancelación ya persistida.
+* La interfaz informa éxito de la operación principal y, cuando el usuario autenticado sea el actor, advierte `La operación se completó, pero no pudimos enviar el correo.`
+
+**Decisión específica de BJHB-26**
+
+* El recordatorio se incorpora al release 1.1.
+* Se envía al cliente exactamente 24 horas antes del turno `confirmed`. El scheduler opera en UTC y el contenido usa la zona del profesional.
+* Un turno creado con menos de 24 horas de anticipación no recibe recordatorio.
+* Incluye profesional, fecha, hora, zona y enlace de cancelación si todavía está dentro de la ventana permitida.
+* Turnos `cancelled` y `no_show` no generan recordatorios.
+* El identificador del turno y el tipo `reminder-24h` forman la clave de deduplicación. Se aplica la política común de tres reintentos.
+
 ## Notas de QA
 
 * Controlar el reloj para probar límites de fecha, cancelaciones y reejecuciones.
@@ -49,7 +82,7 @@ Como cliente final, quiero recibir un recordatorio el día anterior, para reduci
 
 ## Inspección Shift-Left
 
-**Resultado:** Bloqueante
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-26.md`
 
@@ -61,14 +94,13 @@ Como cliente final, quiero recibir un recordatorio el día anterior, para reduci
 | Brecha confirmada y necesidad de ejecución programada | `.context/Confluence-corporativo/05-hilo-mail-cambio-de-alcance.md` · correo del 28/02/2026 |
 | Demanda posterior al lanzamiento | `.context/Confluence-corporativo/06-tickets-soporte-resumen.md` · Recordatorios |
 | Exclusión de turnos cancelados y automatización | **Hipótesis técnica** — se deducen del objetivo y de la necesidad de un proceso programado |
-| Evitar un segundo recordatorio | **Hipótesis** — no hay regla documentada de idempotencia |
+| Evitar un segundo recordatorio | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-26 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-26 |
 
 ## Contradicciones detectadas
 
-* La especificación lo exige, pero el hilo del 03/03/2026 y la reunión del 19/05/2026 confirman que se excluyó del lanzamiento. Se conserva como requisito pendiente, no como comportamiento implementado.
+* La especificación inicial incluía el recordatorio y una decisión posterior lo había excluido del primer lanzamiento. Producto lo incorpora expresamente al release 1.1 con envío exactamente 24 horas antes.
 
 ## Preguntas abiertas
 
-* ¿A qué hora y en qué zona horaria se determina «el día anterior»?
-* ¿Cuántos reintentos se permiten y cómo se evitan duplicados?
-* ¿Qué datos del turno debe incluir el recordatorio?
+* Ninguna pendiente de decisión funcional.

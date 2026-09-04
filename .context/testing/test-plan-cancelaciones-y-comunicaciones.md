@@ -1,7 +1,7 @@
 # Plan de Pruebas: Cancelaciones y comunicaciones transaccionales
 
 **Epic:** BJHB-5
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 
 ## 1. Matriz de Riesgos del Producto
 
@@ -11,7 +11,7 @@
 | R2 | Slot cancelado no vuelve a ofrecerse | 5 | 4 | 20 (Alto) | Integración cancelación-disponibilidad |
 | R3 | Token permite cancelar turno indebido | 3 | 5 | 15 (Alto) | Seguridad de token y autorización |
 | R4 | Correos ausentes, duplicados o incorrectos | 4 | 4 | 16 (Alto) | Contratos, buzón controlado e idempotencia |
-| R5 | Recordatorio no construido | 5 | 3 | 15 (Alto) | Decisión de release y prueba del scheduler |
+| R5 | Scheduler omite o duplica recordatorios de 24 horas | 4 | 4 | 16 (Alto) | Reloj controlado, estados y deduplicación |
 
 ## 2. Niveles de Prueba (Pyramid)
 
@@ -23,7 +23,7 @@
 
 * **Seguridad:** OWASP ZAP y pruebas dirigidas de entropía/vigencia de token, aislamiento y enumeración.
 * **Resiliencia:** Postman/Newman para fallos y reintentos de Resend sin estados engañosos.
-* **Performance:** k6 para propagación de cancelación; no hay SLA acordado.
+* **Performance:** k6 para p95 de lecturas menor o igual a 500 ms, 100 usuarios simultáneos y menos de 1 % de respuestas 5xx.
 
 ## 4. Necesidades de Entorno y Datos
 
@@ -32,6 +32,7 @@
 | Turnos futuros/pasados y buzones interceptados | Producción | No | `test-data-strategy.md` · Escenarios mínimos |
 | Acceso de lectura a turno sintético existente | Producción | Parcial | `environments.md` · Detalles de Acceso |
 | Control del reloj y scheduler | Producción | No | `test-data-strategy.md` · Capacidad faltante |
+| Entorno aislado con correo sandbox | QA requerido por Producto | No | `decisiones-po-proximo-release.md` · 9.1 y 9.2 |
 
 ## Fuentes
 
@@ -40,12 +41,16 @@
 | Falla observada de BJHB-24 | `.context/PBI/epics/EPIC-BJHB-5-cancelaciones-y-comunicaciones-transaccionales/stories/STORY-BJHB-24-cancelacion-por-profesional/story.md` |
 | Restricción de entorno | `.context/infrastructure/environments.md` · Riesgos |
 | Datos necesarios | `.context/infrastructure/test-data-strategy.md` · Escenarios mínimos |
+| Reglas vigentes | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-23 a BJHB-27 y 7.1 |
 | Scoring | **Hipótesis** — valoración de riesgo de QA |
 
 ## Contradicciones detectadas
 
-* El comportamiento observado contradice persistencia y liberación; el recordatorio requerido fue excluido del lanzamiento.
+* BJHB-24 exige persistencia y liberación antes del éxito; producción mostró el turno `confirmed` y el slot ocupado.
+* Producto reincorpora el recordatorio al release 1.1, reemplazando su exclusión del primer lanzamiento.
+* Producto exige un entorno QA aislado; el mapa vigente solo confirma Producción.
 
 ## Preguntas abiertas
 
-* ¿Qué ventana, zona, atomicidad de correo, release de recordatorios y entorno aislado se aprobarán?
+* ¿Cuál fue la causa técnica del falso éxito de BJHB-24 y se intentó enviar el correo?
+* ¿Cuándo estarán disponibles QA, correo sandbox, reloj controlable, seed y teardown?

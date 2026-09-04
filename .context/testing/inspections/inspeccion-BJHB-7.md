@@ -1,37 +1,36 @@
-# Reporte de Inspección de Requisitos: Listado de clientes
+# Reporte de Inspección de Requisitos: Listado de clientes del profesional
 
 **Historia:** BJHB-7
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-7-D1 | Regla de negocio | No se define normalización del correo para unicidad. | Acordar trim y comparación de mayúsculas. |
-| BJHB-7-D2 | Completitud | No se definen orden, búsqueda ni paginación. | Fijar comportamiento para volúmenes crecientes. |
-| BJHB-7-D3 | Alcance | El historial aparece como necesidad, pero no como criterio acordado. | Mantenerlo fuera o crear una historia separada. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional autenticado, quiero listar únicamente mis clientes, unificados por correo, mostrando nombre y correo. Normalización, orden, búsqueda, paginación e historial quedan `Pendiente`; el historial no se incorpora implícitamente.
+La versión vigente de `story.md` contiene 7 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Medio
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Historia inspeccionada | `.context/PBI/epics/EPIC-BJHB-6-clientes-y-limite-freemium/stories/STORY-BJHB-7-listado-de-clientes/story.md` |
-| Listado y unicidad | `.context/architecture/prd.md` · Feature 5 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-6-clientes-y-limite-freemium\stories\STORY-BJHB-7-listado-de-clientes\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 5 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-7 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Cómo se normaliza, ordena y pagina el listado, y se incluye historial?
+* Ninguna pendiente de decisión funcional.

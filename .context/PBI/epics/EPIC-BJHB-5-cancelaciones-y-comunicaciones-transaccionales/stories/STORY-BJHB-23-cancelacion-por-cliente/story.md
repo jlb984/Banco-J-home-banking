@@ -4,7 +4,8 @@
 **Epic:** BJHB-5
 **Implementación:** Sin verificar
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
-**Estado:** Refinado
+**Refinamiento:** Refinado
+**Inspección QA:** Aprobado
 
 ## Descripción
 
@@ -17,7 +18,7 @@ Como cliente final, quiero cancelar mediante el enlace de mi correo, para libera
 | Independiente | No | Depende del correo de confirmación y su enlace único. |
 | Negociable | Sí | El objetivo y efectos están definidos; la ventana de cancelación queda abierta. |
 | Valiosa | Sí | Permite liberar el horario sin crear una cuenta. |
-| Estimable | No | No se definieron vigencia, reutilización ni respuesta del enlace. |
+| Estimable | Sí | Las decisiones vigentes de Producto cierran los valores y resultados necesarios para estimar la Story. |
 | Pequeña | Sí | Cubre una cancelación iniciada por el cliente. |
 | Testeable | Sí | Estado, autorización por token y liberación pueden comprobarse. |
 
@@ -44,6 +45,36 @@ Como cliente final, quiero cancelar mediante el enlace de mi correo, para libera
 **Then** el sistema no ejecuta una segunda cancelación
 **And** no crea ni modifica otros turnos
 
+### Escenario 4: Rechazar una cancelación dentro de dos horas
+**Given** que faltan menos de dos horas para el inicio del turno
+**When** el cliente abre el enlace e intenta cancelar
+**Then** el sistema conserva el turno
+**And** muestra «Ya no puedes cancelar este turno desde el enlace. Contacta al profesional.»
+
+### Escenario 5: Rechazar un token inválido
+**Given** que el enlace contiene un token inválido
+**When** el cliente intenta cancelar
+**Then** el sistema no modifica el turno
+**And** muestra «El enlace de cancelación no es válido.»
+
+### Escenario 6: Persistir y liberar antes de informar éxito
+**Given** que el token y la ventana de cancelación son válidos
+**When** el cliente confirma la cancelación
+**Then** el sistema persiste cancelled y libera el slot en una única operación
+**And** solo después informa el éxito
+
+## Decisiones de Producto incorporadas
+
+Fuente vigente: `.context/PBI/decisiones-po-proximo-release.md` · BJHB-23 y decisiones transversales aplicables.
+
+* El enlace contiene un token aleatorio de al menos 256 bits; en la base se conserva solamente su hash.
+* El token es válido desde la confirmación hasta el límite de cancelación de 2 horas antes del turno.
+* Reenviar la confirmación reutiliza el mismo enlace mientras siga vigente. No existe regeneración autónoma del token en este release.
+* Un turno ya cancelado muestra `Este turno ya fue cancelado.` sin repetir efectos.
+* Token inválido: `El enlace de cancelación no es válido.`
+* Turno pasado o dentro de la ventana restringida: `Ya no puedes cancelar este turno desde el enlace. Contacta al profesional.`
+* Una cancelación válida persiste `cancelled` y libera el slot en una única operación antes de informar éxito.
+
 ## Notas de QA
 
 * Probar token válido, alterado, de otro turno y ya utilizado.
@@ -52,7 +83,7 @@ Como cliente final, quiero cancelar mediante el enlace de mi correo, para libera
 
 ## Inspección Shift-Left
 
-**Resultado:** Requiere Cambios
+**Resultado:** Aprobado
 
 **Reporte:** `.context/testing/inspections/inspeccion-BJHB-23.md`
 
@@ -63,14 +94,13 @@ Como cliente final, quiero cancelar mediante el enlace de mi correo, para libera
 | Enlace único sin cuenta | `.context/Confluence-corporativo/01-minuta-kickoff.md` · Los dos usuarios del sistema; `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 6.1 |
 | Restricción temporal, estado y liberación | `.context/Confluence-corporativo/03-especificacion-funcional-v0.3.md` · sección 6.3 |
 | Riesgo del endpoint público | `.context/Confluence-corporativo/04-notas-tecnicas.md` · Endpoints |
-| No repetir efectos al reutilizar un enlace | **Hipótesis** — no hay regla documentada para idempotencia |
+| No repetir efectos al reutilizar un enlace | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-23 |
+| Reglas aprobadas para el release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-23 |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿El enlace vence y puede revocarse o regenerarse?
-* ¿Existe una ventana mínima previa al turno para cancelar?
-* ¿Qué respuesta se muestra ante un token inválido, un turno pasado o ya cancelado?
+* Ninguna pendiente de decisión funcional.

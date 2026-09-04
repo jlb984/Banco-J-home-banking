@@ -1,38 +1,36 @@
-# Reporte de Inspección de Requisitos: Recuperación de contraseña
+# Reporte de Inspección de Requisitos: Recuperación de contraseña del profesional
 
 **Historia:** BJHB-12
-**Fecha:** 03/09/2026
+**Fecha:** 04/09/2026
 **Estado de sincronización:** Sincronizado con Jira (`BJHB`)
 
 ## 1. Defectos Encontrados
 
 | ID | Tipo | Descripción del Defecto | Sugerencia de Corrección |
 | :--- | :--- | :--- | :--- |
-| BJHB-12-D1 | Completitud | No se define la política de la contraseña nueva. | Confirmar si reutiliza exactamente las reglas de registro. |
-| BJHB-12-D2 | Caso borde | Faltan mensajes para token inválido, vencido, usado o sustituido. | Definir resultado verificable para cada partición. |
-| BJHB-12-D3 | Seguridad | No se definen límites de solicitudes ni invalidación de enlaces anteriores. | Acordar rate limit, vigencia y precedencia de tokens. |
+| — | — | No se detectaron defectos de requisito abiertos después de incorporar las decisiones aprobadas de Producto. | No requiere corrección funcional adicional. |
 
 ## 2. Versión Corregida de la Historia
 
-Como profesional, quiero recuperar mi acceso mediante un token de un solo uso y una respuesta que no revele si mi correo existe. Se conservan vigencia de una hora y respuesta no enumerativa; política de contraseña, mensajes, rate limit y sesión posterior quedan `Pendiente`.
+La versión vigente de `story.md` contiene 12 escenarios verificables e incorpora las decisiones aprobadas de Producto, incluidos límites, mensajes, estados y casos borde aplicables. No conserva ambigüedades funcionales abiertas.
 
 ## 3. Valoración de Calidad
 
-* **Estado:** Requiere Cambios
+* **Veredicto:** Aprobado
 * **Riesgo:** Alto
 
 ## Fuentes
 
 | Dato / afirmación | De dónde sale |
 | :--- | :--- |
-| Flujo y vacíos inspeccionados | `.context/PBI/epics/EPIC-BJHB-1-cuenta-y-activacion-del-profesional/stories/STORY-BJHB-12-recuperacion-de-contrasena/story.md` |
-| Token de una hora y no enumeración | `.context/architecture/prd.md` · Feature 1 |
+| Criterios y escenarios inspeccionados | `.context\PBI\epics\EPIC-BJHB-1-cuenta-y-activacion-del-profesional\stories\STORY-BJHB-12-recuperacion-de-contrasena\story.md` |
+| Alcance funcional contrastado | `.context/architecture/prd.md` · Feature 1 |
+| Reglas vigentes del release 1.1 | `.context/PBI/decisiones-po-proximo-release.md` · BJHB-12 y decisiones transversales aplicables |
 
 ## Contradicciones detectadas
 
-* Ninguna detectada.
+* Ninguna pendiente después de aplicar las decisiones de Producto para el release 1.1.
 
 ## Preguntas abiertas
 
-* ¿Qué política cumple la nueva contraseña y qué ocurre con tokens anteriores?
-* ¿Qué límites, mensajes y sesión posterior corresponden al flujo?
+* Ninguna pendiente de decisión funcional.
