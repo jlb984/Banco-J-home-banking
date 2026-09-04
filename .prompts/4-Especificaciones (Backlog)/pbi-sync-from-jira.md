@@ -21,11 +21,6 @@ Este prompt cubre la dirección que faltaba del espejo. El resto de la Fase 4 es
 1.  La **key** (o las keys) de lo que vas a trabajar. Esto sí me lo tienes que pedir.
 2.  Contenido de `.context/PBI/epic-tree.md`
 
-**Destino obligatorio de esta ejecución:** Jira
-`https://jlb984.atlassian.net/`, Project Key `BJHB`, según
-`.context/project-connections.md`. Rechaza cualquier key que no comience con `BJHB-` y
-explica que debe mapearse antes de usar este flujo.
-
 ---
 
 ### **INICIO DEL PROMPT**
@@ -78,7 +73,7 @@ Escribe el `story.md` con **el mismo formato que define `.prompts/4-Especificaci
 Tres cosas propias de una historia traída del tablero:
 
 *   **`Implementación:` nace `Sin verificar`.** Que el ticket exista no significa que la funcionalidad esté construida, y nadie fue a mirarla.
-*   **Cada afirmación cita el ticket**, con la fecha en que la trajiste: `` `BJHB-2` · Jira, traído el [fecha] ``.
+*   **Cada afirmación cita el ticket**, con la fecha en que la trajiste: `` `PROJ-123` · Jira, traído el [fecha] ``.
 *   **Lo que el ticket no dice, no se completa.** Un ticket suele traer menos de lo que pide el formato: si no hay criterios de aceptación, la sección queda con *"El ticket no los define"* y eso va además a *Preguntas abiertas*.
 
 > **Y dilo en la confirmación final, porque cambia cómo hay que leer ese archivo:** citar a Jira dice **dónde lo leíste**, no de dónde salió originalmente. No sabes quién escribió ese criterio, ni contra qué documento, ni si alguien lo acordó. **Una historia traída del tablero no es una historia documentada: es una historia copiada.**
@@ -90,7 +85,7 @@ Tres cosas propias de una historia traída del tablero:
 | Qué difiere | Quién manda |
 | :--- | :--- |
 | Estado, asignación, título, prioridad, campos del ticket | **Jira.** Actualiza el archivo local sin preguntar |
-| `Implementación`, tabla de **Fuentes**, evidencia, filas `Observado` | **El archivo local.** Jira no tiene dónde guardar eso — **no lo borres nunca** |
+| `Implementación`, `Refinamiento`, `Inspección QA`, tabla de **Fuentes**, evidencia, filas `Observado` | **El archivo local.** Jira no tiene dónde guardar nada de eso — **no lo borres nunca** |
 | **El texto de un criterio de aceptación** | **Ninguno de los dos. Es un hallazgo.** |
 
 Para el tercer caso: escribe **las dos versiones**, citadas, en *Contradicciones detectadas*, y deja la pregunta en *Preguntas abiertas*. No elijas.
@@ -126,7 +121,7 @@ Es el dato que permite saber, dentro de un mes, si vale la pena volver a cotejar
 **Restricciones:**
 
 - **Nunca traigas en masa.** Solo las keys que te di.
-- **Nunca sobrescribas la tabla de Fuentes, el campo `Implementación` ni las filas `Observado`** con lo que dice el ticket. Eso es trabajo de verificación que el tablero no registra.
+- **Nunca sobrescribas la tabla de Fuentes ni los campos `Implementación`, `Refinamiento` e `Inspección QA`** con lo que dice el ticket. Son trabajo de verificación, refinamiento y revisión que el tablero no registra.
 - **Nunca resuelvas una contradicción de contenido.** Repórtala con las dos versiones.
 - **Nunca inventes lo que el ticket no dice.** Un campo vacío se declara vacío.
 - **Nunca escribas una credencial** que aparezca en un ticket, ni siquiera de un usuario de prueba.

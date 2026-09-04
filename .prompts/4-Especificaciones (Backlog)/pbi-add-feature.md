@@ -8,10 +8,6 @@ Este prompt te ayuda a añadir una nueva funcionalidad al proyecto DESPUÉS de h
 1.  Contenido de `.context/PBI/epic-tree.md`
 2.  La descripción de la nueva feature (esto sí me lo tienes que pedir)
 
-**Destino obligatorio de esta ejecución:** lee `.context/project-connections.md` y usa Jira
-`https://jlb984.atlassian.net/`, Project Key `BJHB`. Antes de crear, busca equivalencias en
-`BJHB` por intención, actores y criterios; no deduzcas duplicados solo por el título.
-
 ---
 
 ### **INICIO DEL PROMPT**
@@ -68,7 +64,7 @@ Al terminar, confírmame:
 **Restricciones:**
 
 - **Todo criterio de aceptación que no salga de la descripción que te di se marca como hipótesis** en la tabla de Fuentes.
-- **La historia nace con `**Implementación:** Sin verificar`.** Estás escribiendo lo que se pidió, no comprobando lo que existe.
+- **La historia nace con los cuatro estados en su valor inicial:** `Implementación: Sin verificar`, `Refinamiento: Borrador`, `Inspección QA: Sin inspeccionar` y la sincronización que corresponda. Estás escribiendo lo que se pidió, no comprobando lo que existe ni refinando nada.
 - **Si lo que te describo resulta ser algo que la aplicación ya hace, este no es el prompt.** Una funcionalidad que ya está construida no se documenta de oído: se documenta mirándola. Dímelo y pasamos a la skill `documentar-historia`, que la explora y deja la evidencia.
 - No reescribas Epics existentes para hacer entrar la feature nueva. Si no encaja, es Nivel 2.
 

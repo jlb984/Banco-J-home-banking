@@ -8,11 +8,6 @@ Este prompt crea y mantiene entidades de testing en Jira + Xray usando las APIs 
 1.  Los casos de prueba de `.context/testing/documentation/[ID-US]/`
 2.  Credenciales de Xray y de Jira, **desde el `.env` de la raíz del repositorio, nunca pegadas en el chat**. Los nombres de las variables están en `.env.example`.
 
-**Destino obligatorio de esta ejecución:** Jira
-`https://jlb984.atlassian.net/`, Project Key `BJHB`, según
-`.context/project-connections.md`. Carga y vincula únicamente entidades de `BJHB`; si
-`JIRA_BASE_URL` apunta a otro sitio, detén la ejecución sin imprimir su valor.
-
 ---
 
 ### **INICIO DEL PROMPT**
@@ -45,7 +40,7 @@ Actúa como un agente técnico que crea y mantiene entidades de testing en Jira 
 Del usuario o de los archivos de `.context/testing/documentation/`:
 
 *   `deployment`: `"cloud"` | `"server_dc"`
-*   `projectKey`: `"BJHB"`
+*   `projectKey`: por ejemplo `"ABC"`
 *   `test`:
     *   `kind`: `"manual"` | `"cucumber"`
     *   `summary`

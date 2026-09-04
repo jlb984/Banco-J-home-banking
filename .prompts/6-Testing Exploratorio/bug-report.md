@@ -8,11 +8,6 @@ Este prompt toma defectos detectados en testing exploratorio y los convierte en 
 1.  El reporte de sesión exploratoria donde apareció el defecto
 2.  Contenido de `.context/infrastructure/environments.md` (nombre real del entorno)
 
-**Destino obligatorio de esta ejecución:** Jira
-`https://jlb984.atlassian.net/`, Project Key `BJHB`, según
-`.context/project-connections.md`. Antes de crear el Bug, valida que sus vínculos y su Epic
-pertenezcan a `BJHB`.
-
 ---
 
 ### **INICIO DEL PROMPT**

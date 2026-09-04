@@ -11,11 +11,6 @@ Funciona en dos escenarios —proyecto nuevo y proyecto existente— y **se pued
 2.  Contenido de `.context/idea/business-model.md` (para el tipo de proyecto)
 3.  Contenido de `.context/PBI/epic-tree.md`, **si ya existe** (para retomar una corrida anterior)
 
-**Destino obligatorio de esta ejecución:** lee `.context/project-connections.md` y usa Jira
-`https://jlb984.atlassian.net/`, Project Key `BJHB`. No preguntes la Project Key ni la
-deduzcas de claves históricas. GitHub es
-`https://github.com/jlb984/Banco-J-Home-Banking`.
-
 ---
 
 ### **INICIO DEL PROMPT**
@@ -31,9 +26,7 @@ Primero, lee `.context/architecture/prd.md`. Ese es tu insumo principal: no me p
 *   **Si tienes el MCP de Atlassian conectado**, y **si tienes un MCP de navegador conectado**. Revisa tus propias herramientas disponibles. Preguntármelo a mí no sirve: es tu entorno, no el mío.
 *   **Si ya hay un backlog empezado**: mira si existe `.context/PBI/epic-tree.md`.
 
-Después confirma en voz alta que el destino Jira resuelto es `BJHB`. Si
-`.context/project-connections.md` contradice `AGENTS.md`, detente antes de escribir y reporta
-la discrepancia; nunca elijas un proyecto por semejanza de contenido.
+Después pregúntame la **Project Key** de Jira (ej: `MYAPP`). **Si no la tengo, o el proyecto todavía no existe, sigue igual** con el flujo de trabajo: la sección "Sincronización con Jira" te dice cómo.
 
 ---
 
@@ -125,23 +118,15 @@ Para cada Epic en alcance, redacta de 2 a 5 **User Stories** necesarias para com
 
 Este proyecto es **Jira-First**: la fuente de la verdad es Jira y `.context/PBI/` es su espejo. Pero la falta de Jira **no detiene esta fase**.
 
-*   **Si tienes el MCP de Atlassian:** crea las Epics y Stories en el proyecto `BJHB`.
+*   **Si tienes el MCP de Atlassian y te di una Project Key:** crea las Epics y Stories en Jira.
     1.  **Antes de crear nada, comprueba qué tipos de actividad existen en ese espacio** — la interfaz los llama así; la API los sigue llamando *issue types*, y son lo mismo. Si no existe el tipo *Historia* (o *Story*), **no lo sustituyas en silencio por *Tarea***: avísame, porque la jerarquía Epic → Story se pierde y no da ningún error.
-    2.  **Busca primero posibles equivalencias dentro de `BJHB`.** Compara actor, intención,
-        alcance y criterios, no solo títulos. Si un ticket existente es la misma necesidad
-        con menos detalle, actualízalo y conserva su key; si hay diferencias funcionales
-        reales, intégralas explícitamente o mantenlas como Stories separadas. Si la
-        equivalencia es ambigua, no crees un duplicado silencioso: regístrala como decisión
-        pendiente.
-    3.  Crea únicamente las Epics faltantes y obtén su `ISSUE_KEY` real (ej: `BJHB-1`).
-    4.  Después crea solo las Stories faltantes, vinculadas a su Epic (`Epic Link`), y obtén
-        sus keys reales.
-    5.  **A cada Story que crees, pónle la etiqueta `sin-verificar`.** El campo
+    2.  Primero crea la Epic y obtén su `ISSUE_KEY` (ej: `MYAPP-10`).
+    3.  Después crea las Stories vinculadas a esa Epic (`Epic Link`) y obtén sus keys.
+    4.  **A cada Story que crees, pónle la etiqueta `sin-verificar`.** El campo
         `Implementación` vive en el archivo local, y el tablero no lo ve: sin esa etiqueta,
         quien mira Jira no tiene forma de saber que **nadie comprobó esa historia contra la
         aplicación**. La etiqueta se saca cuando alguien la verifica, no antes.
-    6.  Usa esas keys reales en los archivos locales del Paso 4 y deja un mapeo cuando hayas
-        absorbido IDs temporales o heredados.
+    5.  Usa esas keys reales en los archivos locales del Paso 4.
 *   **Si no tienes el MCP, no hay proyecto en Jira, o el MCP no responde:** no te detengas.
     1.  Genera igual toda la estructura local con **IDs temporales**: `PBI-01`, `PBI-02`, etc.
     2.  En cada archivo, pon el campo `**Estado de sincronización:** PENDIENTE DE SUBIR A JIRA`.
@@ -187,7 +172,7 @@ Al terminar, confírmame:
 # Epic: [Título]
 **ID:** [KEY de Jira o ID temporal]
 **Estado de sincronización:** [Sincronizado con Jira | PENDIENTE DE SUBIR A JIRA]
-**Estado:** To Do
+**Estado del trabajo:** To Do
 
 ## Descripción
 [Descripción, con referencia a la sección del PRD de la que sale]
@@ -211,6 +196,8 @@ Al terminar, confírmame:
 **ID:** [KEY de Jira o ID temporal]
 **Epic:** [EPIC-KEY]
 **Implementación:** Sin verificar
+**Refinamiento:** Borrador
+**Inspección QA:** Sin inspeccionar
 **Estado de sincronización:** [Sincronizado con Jira | PENDIENTE DE SUBIR A JIRA]
 
 ## Descripción
@@ -227,6 +214,20 @@ Como [rol], quiero [acción], para [beneficio].
 | [Criterio de aceptación] | **Observado** — [entorno], [fecha]. Evidencia: `[ruta]` |
 | [Criterio de aceptación] | **Hipótesis** — no hay documento que lo respalde |
 ```
+
+> **Los cuatro estados de una historia son independientes y cada uno tiene un solo dueño.**
+> No se deducen entre sí y **ninguno se estima**: si no te consta, se deja como está.
+>
+> | Campo | Contesta | Lo escribe |
+> | :--- | :--- | :--- |
+> | `Implementación` | ¿Está **construido**? | La skill `documentar-historia`, que va a mirar |
+> | `Refinamiento` | ¿Tiene **criterios probables**? | `refine-stories.md` |
+> | `Inspección QA` | ¿Pasó la **revisión**? | `requirement-inspection.md` (Fase 5) |
+> | `Estado de sincronización` | ¿Está en **Jira**? | Cualquiera que suba o coteje |
+>
+> > **Una historia refinada no está construida, y una construida no está inspeccionada.**
+> > Mezclarlos es el error que hace que alguien lea `Refinado` y crea que la funcionalidad
+> > existe.
 
 > **El campo `Implementación`** admite `Implementada`, `Parcial`, `No encontrada` o
 > `Sin verificar`, y **acá siempre nace `Sin verificar`**: este prompt arma el mapa del

@@ -8,11 +8,6 @@ Este prompt genera la documentación final de los casos de prueba y ejecuta la c
 1.  Contenido de `.context/testing/documentation/[ID-US]/priorizacion-roi.md`
 2.  El `story.md` de la historia, desde `.context/PBI/` (criterios de aceptación en Gherkin)
 
-**Destino obligatorio de esta ejecución:** Jira
-`https://jlb984.atlassian.net/`, Project Key `BJHB`, según
-`.context/project-connections.md`. Los Tests y vínculos de cobertura deben pertenecer a
-`BJHB`.
-
 ---
 
 ### **INICIO DEL PROMPT**
@@ -29,7 +24,8 @@ Primero, lee `.context/testing/documentation/[ID-US]/priorizacion-roi.md` y el `
 
 Xray no se puede detectar solo, así que esto sí te lo tengo que decir yo. Pregúntame:
 1.  Si el proyecto de Jira tiene **Xray disponible y operativo**.
-2.  Las historias objetivo (keys `BJHB-*` de Jira) para vincular los tests.
+2.  La `Project Key`.
+3.  Las historias objetivo (keys de Jira) para vincular los tests.
 
 **Si no te contesto, o no hay Jira configurado, no te detengas:** toma la Ruta A y anota el estado de sincronización como pendiente.
 
@@ -82,7 +78,7 @@ Al terminar, confírmame:
 
 **2. Un archivo por caso**, en `.context/testing/documentation/[ID-US]/[ID-CP]-[nombre-kebab].md`
 
-Donde `[ID-US]` es la key de la historia (ej: `BJHB-2`) y `[ID-CP]` es la key del test creado. Si todavía no existe, usa un temporal (`CP-TEMP-01`) y actualízalo después.
+Donde `[ID-US]` es la key de la historia (ej: `PROJ-123`) y `[ID-CP]` es la key del test creado. Si todavía no existe, usa un temporal (`CP-TEMP-01`) y actualízalo después.
 
 ```markdown
 # Caso de Prueba: [Título]
