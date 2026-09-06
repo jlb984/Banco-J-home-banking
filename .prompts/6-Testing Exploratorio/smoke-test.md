@@ -64,6 +64,7 @@ El contenido debe seguir esta estructura:
 **Fecha:** [fecha]
 **Entorno:** [nombre real del entorno, según environments.md]
 **URL:** [URL]
+**Usuario:** [usuario]
 **Modo de ejecución:** [Playwright MCP / Manual]
 **Estado:** [PASSED / FAILED / NO EJECUTADO]
 
