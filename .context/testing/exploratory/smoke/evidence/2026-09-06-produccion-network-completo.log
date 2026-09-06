@@ -1,0 +1,10 @@
+13. [POST] https://uuhstroppfwbuxudziqe.supabase.co/auth/v1/token?grant_type=refresh_token => [400]
+15. [GET] https://cita-ai.vercel.app/forgot-password?_rsc=16djb => [200]
+17. [POST] https://uuhstroppfwbuxudziqe.supabase.co/auth/v1/token?grant_type=password => [200]
+18. [GET] https://cita-ai.vercel.app/dashboard?_rsc=1v308 => [200]
+19. [GET] https://cita-ai.vercel.app/dashboard?_rsc=1sy7d => [200]
+22. [POST] https://cita-ai.vercel.app/_vercel/speed-insights/vitals => [200]
+23. [GET] https://cita-ai.vercel.app/?_rsc=1ii8t => [308]
+24. [GET] https://cita-ai.vercel.app/login?_rsc=1ii8t => [200]
+
+Note: 16 static requests not shown, run with "static" option to see them.

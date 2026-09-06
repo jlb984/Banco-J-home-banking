@@ -1,0 +1,10 @@
+Total messages: 3 (Errors: 2, Warnings: 0)
+Returning 2 messages for level "error"
+
+[ERROR] Failed to load resource: the server responded with a status of 400 () @ https://uuhstroppfwbuxudziqe.supabase.co/auth/v1/token?grant_type=refresh_token:0
+[ERROR] AuthApiError: Invalid Refresh Token: Refresh Token Not Found
+    at tX (https://cita-ai.vercel.app/_next/static/chunks/38-8953845d1108aa59.js:24:46580)
+    at async t1 (https://cita-ai.vercel.app/_next/static/chunks/38-8953845d1108aa59.js:24:47579)
+    at async t0 (https://cita-ai.vercel.app/_next/static/chunks/38-8953845d1108aa59.js:24:47235)
+    at async r (https://cita-ai.vercel.app/_next/static/chunks/38-8953845d1108aa59.js:37:25447)
+    at async https://cita-ai.vercel.app/_next/static/chunks/38-8953845d1108aa59.js:37:25693 @ https://cita-ai.vercel.app/_next/static/chunks/23-f8225a369f642320.js:0
