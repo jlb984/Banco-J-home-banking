@@ -7,7 +7,7 @@
 **GitHub canónico:** `https://github.com/jlb984/Banco-J-Home-Banking`
 **Migración:** completada y documentada en `.context/PBI/migracion-caq-a-bjhb.md`
 **Tipo de proyecto:** Brownfield
-**Fecha:** 04/09/2026
+**Fecha:** 09/09/2026 (base de refinamiento del 04/09/2026 sin cambios; se agrega la sincronización Jira del 09/09/2026)
 
 | Epic | Stories | Refinadas | Inspeccionadas | Sin verificar | Estado de sincronización |
 | :--- | :---: | :---: | :---: | :---: | :--- |
@@ -23,7 +23,12 @@
 
 ## Pendiente de subir a Jira
 
-* Ninguna. Las 22 Stories fueron resincronizadas con `BJHB` el 04/09/2026.
+* Ninguna Story pendiente. Las 22 Stories fueron resincronizadas con `BJHB` el 04/09/2026.
+* Sincronización del 09/09/2026 (bugs y evidencia exploratoria posterior al 04/09):
+  * `BJHB-28` (bug de cancelación UI, creado el 06/09/2026): descripción actualizada desde `.context/testing/exploratory/bugs/bug-2026-09-06-cancelacion-sin-motivo-opcional.md` y vinculado con `Relates` a `BJHB-24`.
+  * `BJHB-24`: comentario con la sesión UI del 06/09/2026 y el handoff UI→API/DB.
+  * `BJHB-11`: comentario con los smokes del 06/09/2026 (PASSED) y 07/09/2026 (PASSED parcial, login no ejecutado).
+  * `BJHB-13`: comentario con la nueva evidencia del smoke del 06/09/2026 (tarjeta `Tu enlace público de reservas` visible; no cierra el bloqueante).
 
 ## Estado de refinamiento
 
@@ -69,13 +74,16 @@ seed, teardown ni correo sandbox disponibles.
 
 **Sincronización Jira:** completada y verificada el 04/09/2026. Las 22 descripciones fueron
 actualizadas y cada Story conserva exactamente un comentario Shift-Left y uno de decisión de
-Producto, ambos actualizados sin duplicados.
+Producto, ambos actualizados sin duplicados. El 09/09/2026 se sincronizaron los deltas
+posteriores: descripción completa de `BJHB-28`, vínculo `Relates` con `BJHB-24` y comentarios
+de evidencia exploratoria en `BJHB-24`, `BJHB-11` y `BJHB-13` (sin reescribir descripciones de Stories).
 
 ## Pendiente de verificar contra la aplicación
 
 * Todas las Stories excepto BJHB-24 permanecen `Sin verificar` por tratarse de un proyecto
   Brownfield y existir únicamente un entorno de producción con datos reales.
 * BJHB-24 fue verificada parcialmente en producción con un turno sintético: la UI inicia la cancelación, pero el cambio no persiste ni libera el horario.
+* Evidencia exploratoria del 06/09/2026 (sesión UI de cancelación + smoke de producción) y smoke del 07/09/2026 (portada PASS, login no ejecutado) registrada en `.context/testing/exploratory/` y sincronizada en Jira el 09/09/2026. El bug `BJHB-28` (motivo opcional ausente) queda trazado a `BJHB-24`.
 
 ## Contradicciones detectadas
 
