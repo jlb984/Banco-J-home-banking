@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": "allow",
+  "references": {
+    "context": {
+      "path": "./.context",
+      "description": "Memoria del proyecto Banco-J: PRDs, backlog BJHB, decisiones y evidencias"
+    },
+    "prompts": {
+      "path": "./.prompts",
+      "description": "Cerebro del curso QA: prompts F1 a F7"
+    }
+  },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp@latest"],
+      "enabled": true
+    },
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp/authv2",
+      "enabled": true
+    }
+  }
+}
